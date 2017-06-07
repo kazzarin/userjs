@@ -33,7 +33,7 @@
             onmatch: function() {
                 var history = Util.qq('#history tbody tr td:last-child');
                 for (var i = 0; i <= history.length - 1; i++) {
-                    history[i].setAttribute('title', history[i].textContent);
+                    history[i].setAttribute('style', 'white-space: normal;');
                 }
             }
         });
