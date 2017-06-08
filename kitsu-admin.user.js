@@ -32,7 +32,7 @@
             stop: true,
             onmatch: function() {
                 var history = Util.qq('#history tbody tr td:last-child');
-                for (var i = 0; i <= history.length - 1; i++) {
+                for (var i = 0; i < history.length; i++) {
                     history[i].setAttribute('style', 'white-space: normal;');
                 }
             }
@@ -45,7 +45,7 @@
         stop: false,
         onmatch: function() {
             var links = Util.qq('.show_in_app_member_link a');
-            for (var i = 0; i <= links.length - 1; i++) {
+            for (var i = 0; i < links.length; i++) {
                 links[i].setAttribute('target', '_blank');
             }
         }
