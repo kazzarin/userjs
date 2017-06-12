@@ -25,7 +25,7 @@
         }
     };
 
-    // Show full history message on hover
+    // Show full history message
     waitForUrl(REGEX, function() {
         waitForElems({
             sel: '#history',
