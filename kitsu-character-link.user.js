@@ -68,4 +68,26 @@
             });
         }
     });
+
+    // Waifu/husbando
+    waitForElems({
+        sel: '.waifu-wrapper img',
+        stop: false,
+        onmatch: function(waifu) {
+            var id = waifu.src.match(/images\/([0-9]+)\//)[1];
+            App.getMalId(id, function(malId) {
+                if (malId) {
+                    var name = Util.q('.waifu-name');
+                    var link = document.createElement('a');
+                    link.textContent = name.textContent;
+                    link.style = 'font-family:inherit';
+                    link.href = 'https://myanimelist.net/character/' + malId;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    name.textContent = '';
+                    name.appendChild(link);
+                }
+            });
+        }
+    });
 })();
