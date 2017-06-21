@@ -90,4 +90,21 @@
             });
         }
     });
+
+    // Character list on media pages
+    waitForElems({
+        sel: '.character-grid .character-image img',
+        stop: false,
+        onmatch: function (character) {
+            var id = character.src.match(/images\/([0-9]+)\//)[1];
+            App.getMalId(id, function(malId) {
+                if (malId) {
+                    var link = character.parentElement.parentElement;
+                    link.href = 'https://myanimelist.net/character/' + malId;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                }
+            });
+        }
+    })
 })();
