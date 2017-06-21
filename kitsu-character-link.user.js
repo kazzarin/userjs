@@ -50,14 +50,14 @@
 
     // Favorite characters on profile
     waitForElems({
-        // BUG: 1. Using 'img[src]' will only work for the first 12 characters on the page
-        //         Could be a bug with wait for elements
-        //      2. Using 'img' will work for all characters except for the first character in every batch of 12
-        //         Might be caused by the src attribute not loading in fast enough
-        sel: '.favorite-characters-panel img[src]',
+        sel: '.favorite-characters-panel img',
         stop: false,
         onmatch: function(character) {
-            var id = character.src.match(/images\/([0-9]+)\//)[1];
+            if (character.src) {
+                var id = character.src.match(/images\/([0-9]+)\//)[1];
+            } else if (character.hasAttribute('data-src')) {
+                var id = character.getAttribute('data-src').match(/images\/([0-9]+)\//)[1];
+            }
             App.getMalId(id, function(malId) {
                 if (malId) {
                     var link = character.parentElement.parentElement;
@@ -96,7 +96,11 @@
         sel: '.character-grid .character-image img',
         stop: false,
         onmatch: function (character) {
-            var id = character.src.match(/images\/([0-9]+)\//)[1];
+            if (character.src) {
+                var id = character.src.match(/images\/([0-9]+)\//)[1];
+            } else if (character.hasAttribute('data-src')) {
+                var id = character.getAttribute('data-src').match(/images\/([0-9]+)\//)[1];
+            }
             App.getMalId(id, function(malId) {
                 if (malId) {
                     var link = character.parentElement.parentElement;
