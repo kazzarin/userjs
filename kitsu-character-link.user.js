@@ -27,26 +27,17 @@
             if (self.cache.hasOwnProperty(id)) {
                 cb(self.cache[id]);
             } else {
-                GM_xmlhttpRequest({
-                    method: 'GET',
-                    url: API + '/characters/' + id + '?fields[characters]=malId',
-                    headers: {
+                fetch(`${API}/characters/${id}?fields[characters]=malId`, {
+                    headers: new Headers({
                         'Accept': 'application/vnd.api+json'
-                    },
-                    onload: function(response) {
-                        try {
-                            var json = JSON.parse(response.responseText);
-                            var malId = json.data.attributes.malId;
-                            self.cache[id] = malId;
-                            cb(malId);
-                        } catch (err) {
-                            console.log('Failed to parse character API results');
-                        }
-                    },
-                    onerror: function() {
-                        console.log('Failed to get Kitsu character data');
-                    }
-                });
+                    })
+                })
+                .then(response => { return response.json() })
+                .then(json => {
+                    var malId = json.data.attributes.malId;
+                    self.cache[id] = malId;
+                    cb(malId);
+                })
             }
         }
     };
