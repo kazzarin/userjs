@@ -8,22 +8,7 @@
 // ==/UserScript==
 
 (function() {
-    var SCRIPT_NAME = 'Kitsu Streamer New Tab';
     var REGEX = /^https?:\/\/kitsu\.io\/(anime|manga)\/([^\/]+)\/?(?:\?.*)?$/;
-
-    var Util = {
-        log: function() {
-            var args = [].slice.call(arguments);
-            args.unshift('%c' + SCRIPT_NAME + ':', 'font-weight: bold;color: #233c7b;');
-            console.log.apply(console, args);
-        },
-        q: function(query, context) {
-            return (context || document).querySelector(query);
-        },
-        qq: function(query, context) {
-            return [].slice.call((context || document).querySelectorAll(query));
-        }
-    };
 
     // Modify streaming links
     waitForUrl(REGEX, function() {

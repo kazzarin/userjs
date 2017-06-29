@@ -8,23 +8,8 @@
 // ==/UserScript==
 
 (function() {
-    var SCRIPT_NAME = 'Userstyles Style Preview';
     var REGEX = /^https?:\/\/userstyles\.org\/styles\/[0-9]+\/[a-z0-9\-]+$/;
 
-    var Util = {
-        log: function() {
-            var args = [].slice.call(arguments);
-            args.unshift('%c' + SCRIPT_NAME + ':', 'font-weight: bold;color: #233c7b;');
-            console.log.apply(console, args);
-        },
-        q: function(query, context) {
-            return (context || document).querySelector(query);
-        },
-        qq: function(query, context) {
-            return [].slice.call((context || document).querySelectorAll(query));
-        }
-    };
-    
     // Replace image
     waitForUrl(REGEX, function() {
         waitForElems({
