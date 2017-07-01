@@ -11,6 +11,7 @@
     var API = 'https://kitsu.io/api/edge';
 
     var App = {
+        cache: {},
         checkImage: function(elem, cb) {
             if (elem.src) {
                 cb(elem.src.match(/images\/([0-9]+)\//)[1]);
@@ -21,24 +22,31 @@
             }
         },
         getMalId: function(id, cb) {
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: API + '/characters/' + id + '?fields[characters]=malId',
-                headers: {
-                    'Accept': 'application/vnd.api+json'
-                },
-                onload: function(response) {
-                    try {
-                        var json = JSON.parse(response.responseText);
-                        cb(json.data.attributes.malId);
-                    } catch (err) {
-                        console.log('Failed to parse character API results');
+            var self = this;
+            if (self.cache.hasOwnProperty(id)) {
+                cb(self.cache[id]);
+            } else {
+                GM_xmlhttpRequest({
+                    method: 'GET',
+                    url: API + '/characters/' + id + '?fields[characters]=malId',
+                    headers: {
+                        'Accept': 'application/vnd.api+json'
+                    },
+                    onload: function(response) {
+                        try {
+                            var json = JSON.parse(response.responseText);
+                            var malId = json.data.attributes.malId;
+                            self.cache[id] = malId;
+                            cb(malId);
+                        } catch (err) {
+                            console.log('Failed to parse character API results');
+                        }
+                    },
+                    onerror: function() {
+                        console.log('Failed to get Kitsu character data');
                     }
-                },
-                onerror: function() {
-                    console.log('Failed to get Kitsu character data');
-                }
-            });
+                });
+            }
         }
     };
 
@@ -71,7 +79,6 @@
                 if (id) {
                     App.getMalId(id, function(malId) {
                         if (malId) {
-                            //var name = waifu.parentNode.nextSibling;
                             var name = document.querySelector('.waifu-name');
                             var link = document.createElement('a');
                             link.textContent = name.textContent;
