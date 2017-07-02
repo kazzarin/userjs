@@ -1,23 +1,23 @@
 // ==UserScript==
 // @name         Kitsu Streamer New Tab
+// @namespace    https://github.com/synthtech
 // @description  Open streaming links in new tabs
-// @version      1.0
+// @version      1.1
+// @author       synthtech
 // @require      https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
 // @match        *://kitsu.io/*
 // @grant        none
 // ==/UserScript==
 
-(function() {
-    var REGEX = /^https?:\/\/kitsu\.io\/(anime|manga)\/([^\/]+)\/?(?:\?.*)?$/;
+(() => {
+    const REGEX = /^https?:\/\/kitsu\.io\/(anime|manga)\/([^\/]+)\/?(?:\?.*)?$/;
 
-    // Modify streaming links
-    waitForUrl(REGEX, function() {
+    waitForUrl(REGEX, () => {
         waitForElems({
             sel: '.where-to-watch-widget a',
-            stop: false,
-            onmatch: function(stream) {
-                stream.target = '_blank';
-                stream.rel = 'noopener';
+            onmatch(elem) {
+                elem.target = '_blank';
+                elem.rel = 'noopener';
             }
         });
     });
