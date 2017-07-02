@@ -13,10 +13,11 @@
     var App = {
         cache: {},
         checkImage: function(elem, cb) {
-            if (elem.src) {
-                cb(elem.src.match(/images\/([0-9]+)\//)[1]);
-            } else if (elem.hasAttribute('data-src')) {
-                cb(elem.getAttribute('data-src').match(/images\/([0-9]+)\//)[1]);
+            var regex = /images\/([0-9]+)\//;
+            if (elem.src && elem.src.match(regex)) {
+                cb(elem.src.match(regex)[1]);
+            } else if (elem.hasAttribute('data-src') && elem.getAttribute('data-src').match(regex)) {
+                cb(elem.getAttribute('data-src').match(regex)[1]);
             } else {
                 cb(null);
             }
