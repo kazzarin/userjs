@@ -8,32 +8,17 @@
 // ==/UserScript==
 
 (function() {
-    var SCRIPT_NAME = 'Kitsu Category Link';
     var MEDIA_REGEX = /^https?:\/\/kitsu\.io\/(anime|manga)\/([^\/]+)\/?(?:\?.*)?$/;
     var EXPLORE_REGEX = /^https?:\/\/kitsu\.io\/explore\/(anime|manga)\/([a-zA-Z-]+)(?!category)$/;
     var CATEGORY_REGEX = /^https?:\/\/kitsu\.io\/explore\/(anime|manga)\/category\/([a-zA-Z-]+)\/?([a-zA-Z-]+)?$/;
 
-    var Util = {
-        log: function() {
-            var args = [].slice.call(arguments);
-            args.unshift('%c' + SCRIPT_NAME + ':', 'font-weight: bold;color: #233c7b;');
-            console.log.apply(console, args);
-        },
-        q: function(query, context) {
-            return (context || document).querySelector(query);
-        },
-        qq: function(query, context) {
-            return [].slice.call((context || document).querySelectorAll(query));
-        }
-    };
-
     // Change links on media pages
     waitForUrl(MEDIA_REGEX, function() {
         waitForElems({
-            sel: '.media--tags a',
+            sel: '.media--category-tag a',
             stop: false,
             onmatch: function(tag) {
-                var regex = /(anime|manga)\?categories=([a-zA-Z]+)/;
+                var regex = /(anime|manga)\?categories=([a-zA-Z\-]+)/;
                 tag.href = '/explore/' + tag.href.match(regex)[1] + '/category/' + tag.href.match(regex)[2];
             }
         });
