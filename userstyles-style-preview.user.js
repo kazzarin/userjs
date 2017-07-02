@@ -1,64 +1,54 @@
 // ==UserScript==
 // @name         Userstyles Style Preview
+// @namespace    https://github.com/synthtech
 // @description  Use original images for style preview
-// @version      1.0
+// @version      1.1
+// @author       synthtech
 // @require      https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
 // @match        *://userstyles.org/*
-// @grant        GM_xmlhttpRequest
+// @grant        none
 // ==/UserScript==
 
-(function() {
-    var API = 'https://userstyles.org/api/v1';
-    var REGEX = /^https?:\/\/userstyles\.org\/styles\/([0-9]+)\/[a-z0-9\-]+$/;
+(() => {
+    const API = 'https://userstyles.org/api/v1';
+    const REGEX = /^https?:\/\/userstyles\.org\/styles\/([0-9]+)\/[a-z0-9\-]+$/;
 
-    var App = {
-        getStyleInfo: function(id, cb) {
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: API + '/styles/' + id,
-                onload: function(response) {
-                    try {
-                        var json = JSON.parse(response.responseText);
-                        cb(json.screenshots);
-                    } catch (err) {
-                        console.log('Failed to parse style results');
-                    }
-                },
-                onerror: function() {
-                    console.log('Failed to get style data');
-                }
-            });
+    let App = {
+        getStyleInfo(id, cb) {
+            fetch(`${API}/styles/${id}`)
+            .then(response => { return response.json(); })
+            .then(({screenshots}) => { cb(screenshots); })
         }
     };
 
-    waitForUrl(REGEX, function() {
+    waitForUrl(REGEX, () => {
         waitForElems({
             sel: '#preview_image_div',
             stop: true,
-            onmatch: function(elem) {
+            onmatch(elem) {
                 // Replace main image
-                var bg = elem.style.backgroundImage.replace('style_screenshot_thumbnails', 'style_screenshots');
-                elem.style.backgroundImage = bg;
-                var link = document.createElement('a');
+                let main = elem.style.backgroundImage.replace('style_screenshot_thumbnails', 'style_screenshots');
+                elem.style.backgroundImage = main;
+                let link = document.createElement('a');
                 link.id = 'preview_image_link';
-                link.href = bg.match(/^url\("(.*)"\)$/)[1];
+                link.href = main.match(/^url\("(.*)"\)$/)[1];
                 link.target = '_blank';
                 elem.parentNode.insertBefore(link, elem);
                 link.appendChild(elem);
 
                 // Add links to additional images
-                var id = location.href.match(REGEX)[1];
-                App.getStyleInfo(id, function(images) {
+                let id = location.href.match(REGEX)[1];
+                App.getStyleInfo(id, images => {
                     if (images) {
-                        var div = document.createElement('div');
+                        let div = document.createElement('div');
                         div.style.marginBottom = '15px';
-                        var actions = document.querySelector('#actions_div');
+                        let actions = document.querySelector('#actions_div');
                         actions.parentNode.insertBefore(div, actions);
-                        for (var i = 0; i < images.length; i++) {
-                            var link = document.createElement('a');
-                            link.href = images[i];
+                        for (let [i, img] of images.entries()) {
+                            let link = document.createElement('a');
+                            link.href = img;
                             link.target = '_blank';
-                            link.text = 'Image ' + (i + 1);
+                            link.textContent = `Image ${i + 1}`;
                             link.style.padding = '0 10px 10px 0';
                             div.appendChild(link);
                         }
