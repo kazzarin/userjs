@@ -41,8 +41,8 @@
                 let code = elem.textContent.trim();
                 if (code && code !== 'N/A') {
                     App.getAlbumLink(code, results => {
-                        if (results.length < 1) {
-                            if (results[0].prodKey == code) {
+                        if (results.length > 0) {
+                            if (results[0].prodkey == code) {
                                 let link = document.createElement('a');
                                 link.href = `http://www.cdjapan.co.jp/product/${code}`;
                                 link.target = '_blank';
