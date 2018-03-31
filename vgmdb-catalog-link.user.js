@@ -2,9 +2,9 @@
 // @name         VGMDB Catalog Link
 // @namespace    https://github.com/synthtech
 // @description  Link catalog codes to CDJapan
-// @version      1.0
+// @version      1.0.1
 // @author       synthtech
-// @require      https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
+// @require      https://cdn.rawgit.com/fuzetsu/userscripts/477063e939b9658b64d2f91878da20a7f831d98b/wait-for-elements/wait-for-elements.js
 // @match        *://vgmdb.net/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==

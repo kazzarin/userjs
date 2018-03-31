@@ -2,9 +2,9 @@
 // @name         Userstyles Style Preview
 // @namespace    https://github.com/synthtech
 // @description  Use original images for style preview
-// @version      1.1
+// @version      1.1.1
 // @author       synthtech
-// @require      https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
+// @require      https://cdn.rawgit.com/fuzetsu/userscripts/477063e939b9658b64d2f91878da20a7f831d98b/wait-for-elements/wait-for-elements.js
 // @match        *://userstyles.org/*
 // @grant        none
 // ==/UserScript==

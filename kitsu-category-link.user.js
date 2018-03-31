@@ -2,9 +2,9 @@
 // @name         Kitsu Category Link
 // @namespace    https://github.com/synthtech
 // @description  Make category links between explore pages and advanced search more useful
-// @version      1.1
+// @version      1.1.1
 // @author       synthtech
-// @require      https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
+// @require      https://cdn.rawgit.com/fuzetsu/userscripts/477063e939b9658b64d2f91878da20a7f831d98b/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/*
 // @grant        none
 // ==/UserScript==
