@@ -2,7 +2,7 @@
 // @name         Kitsu Admin
 // @namespace    https://github.com/synthtech
 // @description  Minor changes to rails admin for convenience
-// @version      1.3.0
+// @version      1.3.1
 // @author       synthtech
 // @require      https://cdn.rawgit.com/fuzetsu/userscripts/477063e939b9658b64d2f91878da20a7f831d98b/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/api/admin/*
@@ -15,8 +15,11 @@
     // Show full history message
     waitForElems({
         sel: '#history tbody tr td:last-child',
-        onmatch({style}) {
-            style.whiteSpace = 'normal';
+        onmatch(elem) {
+            //elem.style.whiteSpace = 'normal';
+
+            // Need to find a way to not split up dates
+            elem.innerHTML = elem.innerHTML.split(', ').join(',<br>');
         }
     });
 
