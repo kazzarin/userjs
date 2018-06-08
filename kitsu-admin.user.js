@@ -5,7 +5,6 @@
 // @version      1.2.0
 // @author       synthtech
 // @require      https://cdn.rawgit.com/fuzetsu/userscripts/477063e939b9658b64d2f91878da20a7f831d98b/wait-for-elements/wait-for-elements.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js
 // @match        *://kitsu.io/api/admin/*
 // @grant        none
 // ==/UserScript==
