@@ -75,34 +75,15 @@
                 }
             }
 
-            switch(checkType) {
-                case 'date_type':
-                    showField('input');
-                    break;
-                case 'enum_type':
-                    showField();
-                    break;
-                case 'has_and_belongs_to_many_association_type':
-                    showField('select');
-                    break;
-                case 'has_many_association_type':
-                    showField('select');
-                    break;
-                case 'integer_type':
-                    showField();
-                    break;
-                case 'paperclip_type':
-                    showField('.toggle :first-child');
-                    break;
-                case 'serialized_type':
-                    showField();
-                    break;
-                case 'string_type':
-                    showField();
-                    break;
-                case 'text_type':
-                    showField();
-                    break;
+            if (checkType === 'date_type') {
+                showField('input');
+            } else if (checkType === 'paperclip_type') {
+                showField('.toggle :first-child');
+            } else if (checkType === 'has_many_association_type' ||
+                checkType === 'has_and_belongs_to_many_association_type') {
+                showField('select');
+            } else {
+                showField();
             }
 
             function showField(select) {
