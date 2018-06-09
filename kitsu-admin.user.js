@@ -2,7 +2,7 @@
 // @name         Kitsu Admin
 // @namespace    https://github.com/synthtech
 // @description  Minor changes to rails admin for convenience
-// @version      1.3.0
+// @version      1.3.2
 // @author       synthtech
 // @require      https://cdn.rawgit.com/fuzetsu/userscripts/477063e939b9658b64d2f91878da20a7f831d98b/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/api/admin/*
