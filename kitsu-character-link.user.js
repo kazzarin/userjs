@@ -2,9 +2,9 @@
 // @name         Kitsu Character Link
 // @namespace    https://github.com/synthtech
 // @description  Link characters to MAL pages
-// @version      1.1.1
+// @version      1.1.2
 // @author       synthtech
-// @require      https://cdn.rawgit.com/fuzetsu/userscripts/477063e939b9658b64d2f91878da20a7f831d98b/wait-for-elements/wait-for-elements.js
+// @require      https://cdn.rawgit.com/fuzetsu/userscripts/b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
@@ -63,7 +63,7 @@
 
     // Waifu/husbando
     waitForElems({
-        sel: '.waifu-wrapper img',
+        sel: '.about-stat .waifu-wrapper img',
         onmatch(elem) {
             App.checkImage(elem, id => {
                 id && App.getMalId(id, malId => {
