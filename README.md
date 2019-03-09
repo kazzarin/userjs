@@ -12,3 +12,4 @@ Moca News Image Viewer|Enables mouse events in the image viewer|[Install](https:
 Twitter Original Image|Redirects to source images|[Install](https://github.com/synthtech/userjs/raw/master/twitter-original-image.user.js)
 Userstyles Style Preview|Displays original images|[Install](https://github.com/synthtech/userjs/raw/master/userstyles-style-preview.user.js)
 VGMDB Catalog Link|Links catalog codes to CDJapan|[Install](https://github.com/synthtech/userjs/raw/master/vgmdb-catalog-link.user.js)
+Warframe Wiki Copy|Copy content of code editor to clipboard|[Install](https://github.com/synthtech/userjs/raw/master/warframe-wiki-copy.user.js)
