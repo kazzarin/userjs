@@ -2,7 +2,7 @@
 // @name         Twitter Original Image
 // @namespace    https://github.com/synthtech
 // @description  Redirect to original images
-// @version      2.1.0
+// @version      2.1.1
 // @author       synthtech
 // @match        *://pbs.twimg.com/*
 // @grant        none
@@ -12,7 +12,7 @@
     // .jpg:orig
     // .jpg?name=orig
     // ?format=jpg&name=large
-    const imageRegex = /^https?:\/\/pbs\.twimg\.com\/media\/([a-zA-Z0-9_\-]+)(\.|\?format=)(jpg|jpeg|png|gif)(:[a-z]+|\?name=[a-z]+|&name=[a-z]+)?$/;
+    const imageRegex = /^https?:\/\/pbs\.twimg\.com\/media\/([a-zA-Z0-9_\-]+)(\.|\?format=)(jpg|jpeg|png|gif)(:[a-z]+|\?name=[a-z]+|&name=[a-z0-9]+)?$/;
     let url = location.href;
 
     if (url.match(imageRegex)) {
