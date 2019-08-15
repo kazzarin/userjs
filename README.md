@@ -9,7 +9,6 @@ Kitsu Video Looper|Loops videos on the feed|[Install](https://github.com/synthte
 Kitsu MU Link|Creates links to MangaUpdates pages|[Install](https://github.com/synthtech/userjs/raw/master/kitsu-mu-link.user.js)
 Kitsu Show All Media Info|Self-explanatory|[Install](https://github.com/synthtech/userjs/raw/master/kitsu-show-all-media-info.user.js)
 Moca News Image Viewer|Enables mouse events in the image viewer|[Install](https://github.com/synthtech/userjs/raw/master/moca-news-image-viewer.user.js)
-Twitter Original Image|Redirects to source images|[Install](https://github.com/synthtech/userjs/raw/master/twitter-original-image.user.js)
 Userstyles Style Preview|Displays original images|[Install](https://github.com/synthtech/userjs/raw/master/userstyles-style-preview.user.js)
 VGMDB Catalog Link|Links catalog codes to CDJapan|[Install](https://github.com/synthtech/userjs/raw/master/vgmdb-catalog-link.user.js)
 Warframe Wiki Copy|Copy content of code editor to clipboard|[Install](https://github.com/synthtech/userjs/raw/master/warframe-wiki-copy.user.js)
