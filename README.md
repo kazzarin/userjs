@@ -1,5 +1,6 @@
 Name|Summary|Install
 --|--|--
+AniList MangaDex Links|Add search links to AniList|[Install](https://github.com/synthtech/userjs/raw/master/anilist-mangadex.user.js)
 Bookwalker Poster|Creates links to cover images|[Install](https://github.com/synthtech/userjs/raw/master/bookwalker-poster.user.js)
 Kitsu Admin|QoL changes to Rails Admin|[Install](https://github.com/synthtech/userjs/raw/master/kitsu-admin.user.js)
 Kitsu Category Link|Category links experiment|[Install](https://github.com/synthtech/userjs/raw/master/kitsu-category-link.user.js)
