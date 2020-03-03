@@ -2,7 +2,7 @@
 // @name         AniList MangaDex Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MangaDex search on manga pages
-// @version      1.0.1
+// @version      1.0.2
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -37,6 +37,7 @@
                         link.className = 'mangadex-link';
                         icon.src = 'https://mangadex.org/images/misc/navbar.svg';
                         icon.style.height = '1.9rem';
+                        icon.style.paddingLeft = '5px';
                         link.appendChild(icon);
                         elem.appendChild(link);
                     }
