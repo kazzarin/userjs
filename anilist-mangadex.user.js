@@ -35,9 +35,10 @@
                         link.target = '_blank';
                         link.rel = 'noopener noreferrer';
                         link.className = 'mangadex-link';
-                        icon.src = 'https://mangadex.org/images/misc/navbar.svg';
+                        icon.src = 'https://mangadex.org/favicon-96x96.png';
                         icon.style.height = '1.9rem';
                         icon.style.paddingLeft = '5px';
+                        icon.style.verticalAlign = 'top';
                         link.appendChild(icon);
                         elem.appendChild(link);
                     }

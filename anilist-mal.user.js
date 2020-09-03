@@ -58,9 +58,10 @@
                             link.target = '_blank';
                             link.rel = 'noopener noreferrer';
                             link.className = 'mal-link';
-                            icon.src = 'https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png';
+                            icon.src = 'https://cdn.myanimelist.net/images/favicon.ico';
                             icon.style.height = '1.9rem';
                             icon.style.paddingLeft = '5px';
+                            icon.style.verticalAlign = 'top';
                             link.appendChild(icon);
                             elem.appendChild(link);
                         }
