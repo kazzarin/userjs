@@ -25,8 +25,10 @@
             .then(res => { return res.json() })
             .then(({data}) => {
                 let mappings;
-                if (media === 'anime') { mappings = data.findAnimeBySlug.mappings.nodes; }
-                else { mappings = data.findMangaBySlug.mappings.nodes; }
+                if (data) {
+                    if (media === 'anime') mappings = data.findAnimeBySlug.mappings.nodes;
+                    else if (media === 'manga') mappings = data.findMangaBySlug.mappings.nodes;
+                }
                 cb(mappings);
             })
         },
