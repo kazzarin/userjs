@@ -18,7 +18,7 @@
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    query: `query ($slug: String!) { ${this.getMediaQuery(media)}(slug: $slug) { mappings { nodes { externalId externalSite } } } }`,
+                    query: `query ($slug: String!) { ${this.getMediaQuery(media)}(slug: $slug) { mappings(first: 20) { nodes { externalId externalSite } } } }`,
                     variables: { slug }
                 })
             })
