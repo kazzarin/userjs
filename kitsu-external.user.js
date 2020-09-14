@@ -59,7 +59,7 @@
 
                         let header = document.createElement('h5');
                         header.textContent = 'External Links';
-                        section.appendChild(header);
+                        section.append(header);
 
                         let listWrap = document.createElement('ul');
 
@@ -90,12 +90,12 @@
                                     link.textContent = 'MangaUpdates';
                                     break;
                             }
-                            list.appendChild(link);
-                            listWrap.appendChild(list);
+                            list.append(link);
+                            listWrap.append(list);
                         });
 
-                        section.appendChild(listWrap);
-                        node.appendChild(section);
+                        section.append(listWrap);
+                        node.append(section);
                     }
                 });
             }
