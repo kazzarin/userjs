@@ -53,6 +53,7 @@
                     if (check) check.remove();
 
                     if (location.href === url && mappings?.length) {
+                        let frag = new DocumentFragment();
                         let section = document.createElement('section');
                         section.id = 'external-links';
                         section.className = 'media--information';
@@ -95,7 +96,8 @@
                         });
 
                         section.append(listWrap);
-                        node.append(section);
+                        frag.append(section);
+                        node.append(frag);
                     }
                 });
             }
