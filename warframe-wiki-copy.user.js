@@ -2,7 +2,7 @@
 // @name         Warframe Wiki Tools
 // @namespace    https://github.com/synthtech
 // @description  Wiki tools for editing
-// @version      1.1.1
+// @version      2.0
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://warframe.fandom.com/*
@@ -10,48 +10,49 @@
 // ==/UserScript==
 
 (() => {
-    const App = {
-        copy() {
-            // Copy content of Ace editor
-            let editor = ace.edit('editarea');
-            navigator.clipboard.writeText(editor.getValue());
-        },
-        reset() {
-            // Force draft discard in Wikia editor
-            let key = document.querySelector('input[name="wpEditDraftKey"]').value;
-            localStorage.removeItem(key);
-        }
+    // Available theme options found here:
+    // https://github.com/Wikia/app/tree/dev/resources/Ace
+    const theme = 'ace/theme/tomorrow_night_eighties';
 
-    };
+    // Set Ace editor theme
+    function aceSetTheme(editor) {
+        ace.edit(editor).setTheme(theme);
+    }
+
+    // Copy content of Ace editor
+    function aceCopy() {
+        let content = ace.edit(document.querySelector('.ace_editor'));
+        navigator.clipboard.writeText(content.getValue());
+    }
+
+    // Create button in wiki editor toolbar
+    function createCopyBtn() {
+        let btn = document.createElement('span');
+        btn.classList = 'tab tab-copy';
+        btn.rel = 'copy';
+
+        let link = document.createElement('a');
+        link.href = '#';
+        link.role = 'button';
+        link.textContent = 'Copy All';
+
+        btn.append(link);
+
+        const toolbar = document.querySelector('#wikiEditor-ui-toolbar .tabs');
+        toolbar.append(btn);
+
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            aceCopy();
+        });
+    }
 
     waitForElems({
         sel: '.ace_editor',
+        stop: true,
         onmatch(elem) {
-            let btn = document.createElement('input');
-            btn.type = 'button';
-            btn.id = 'copy-btn';
-            btn.classList = 'control-button even';
-            btn.style.height = '19px';
-            btn.style.float = 'left';
-            btn.style.marginRight = '20px';
-            btn.value = 'Copy All';
-
-            let toolbar = document.querySelector('#EditPageRail .module_content .buttons');
-            toolbar.append(btn);
-
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                App.copy();
-            });
-        }
-    });
-
-    waitForElems({
-        sel: '#draft-restore-message #discard',
-        onmatch(elem) {
-            elem.addEventListener('click', (e) => {
-                App.reset();
-            });
+            aceSetTheme(elem);
+            createCopyBtn(elem);
         }
     });
 })();
