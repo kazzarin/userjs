@@ -2,7 +2,7 @@
 // @name         Warframe Wiki Tools
 // @namespace    https://github.com/synthtech
 // @description  Wiki tools for editing
-// @version      2.1
+// @version      2.1.1
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://warframe.fandom.com/*
@@ -69,17 +69,50 @@
         ace.edit(editor).setTheme(aceTheme);
     }
 
-    // Copy content of Ace editor
+    // Ace relies on the clipboard api which breaks when
+    // dom.event.clipboardevents.enabled = false
+    // https://github.com/ajaxorg/ace/issues/4326
+
+    // Copy selection from Ace editor
     function aceCopy() {
+        const select = ace.edit(document.querySelector('.ace_editor'));
+        navigator.clipboard.writeText(select.getCopyText());
+    }
+
+    // Copy entire content of Ace editor
+    function aceCopyAll() {
         const content = ace.edit(document.querySelector('.ace_editor'));
         navigator.clipboard.writeText(content.getValue());
     }
 
-    // Create button in wiki editor toolbar
+    // Create buttons in wiki editor toolbar
     function createCopyBtn() {
         const btn = document.createElement('span');
-        btn.classList = 'tab tab-copy';
+        btn.id = 'tab-copy';
+        btn.classList = 'tab';
         btn.rel = 'copy';
+
+        const link = document.createElement('a');
+        link.href = '#';
+        link.role = 'button';
+        link.textContent = 'Copy';
+
+        btn.append(link);
+
+        const toolbar = document.querySelector('#wikiEditor-ui-toolbar .tabs');
+        toolbar.append(btn);
+
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            aceCopy();
+        });
+    }
+
+    function createCopyAllBtn() {
+        const btn = document.createElement('span');
+        btn.id = 'tab-copy-all';
+        btn.classList = 'tab';
+        btn.rel = 'copy-all';
 
         const link = document.createElement('a');
         link.href = '#';
@@ -93,7 +126,7 @@
 
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            aceCopy();
+            aceCopyAll();
         });
     }
 
@@ -114,7 +147,8 @@
         stop: true,
         onmatch(elem) {
             aceSetTheme(elem);
-            createCopyBtn(elem);
+            createCopyBtn();
+            createCopyAllBtn();
         }
     });
 
