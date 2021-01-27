@@ -1,0 +1,20 @@
+{
+  "name": "userjs",
+  "version": "1.0.0",
+  "description": "Personal userjs",
+  "license": "Unlicense",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synthtech/userjs.git"
+  },
+  "homepage": "https://github.com/synthtech/userjs",
+  "scripts": {
+    "test": "eslint \"**/*.js\""
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}
