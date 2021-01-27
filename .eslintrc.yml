@@ -11,3 +11,6 @@ rules:
     - error
     - 4
   linebreak-style: off
+globals:
+  - waitForElems
+  - waitForUrl

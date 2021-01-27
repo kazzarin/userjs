@@ -8,7 +8,8 @@
 // @match        *://kitsu.io/api/admin/*
 // @grant        none
 // ==/UserScript==
-
+/* eslint-env jquery */
+/* global moment */
 (() => {
     const format = 'MMMM DD YYYY, HH:mm';
 
