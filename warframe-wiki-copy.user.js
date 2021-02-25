@@ -8,7 +8,7 @@
 // @match        *://warframe.fandom.com/*
 // @grant        none
 // ==/UserScript==
-
+/* global ace */
 (() => {
     // Ace theme options:
     // https://github.com/Wikia/app/tree/dev/resources/Ace
