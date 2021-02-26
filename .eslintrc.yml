@@ -10,9 +10,9 @@ rules:
   indent:
     - error
     - 4
-  linebreak-style: off
-  no-restricted-globals: off
-  no-underscore-dangle: off
+  linebreak-style: [0]
+  no-restricted-globals: [0]
+  no-underscore-dangle: [0]
 globals:
   waitForElems: readonly
   waitForUrl: readonly
