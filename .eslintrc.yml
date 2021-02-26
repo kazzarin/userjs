@@ -11,6 +11,8 @@ rules:
     - error
     - 4
   linebreak-style: off
+  no-restricted-globals: off
+  no-underscore-dangle: off
 globals:
   waitForElems: readonly
   waitForUrl: readonly
