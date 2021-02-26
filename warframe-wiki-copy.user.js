@@ -17,7 +17,8 @@
     // CodeMirror theme options:
     // https://github.com/codemirror/CodeMirror/tree/master/theme
     const cmTheme = 'ayu-mirage';
-    // The MediaWiki packaged version removed all themes by default, so the styles need to be added manually
+    // The MediaWiki packaged version removed all themes by default,
+    // so the styles need to be added manually
     const cmThemeStyle = `
         /* Based on https://github.com/dempfi/ayu */
 
@@ -149,7 +150,7 @@
             aceSetTheme(elem);
             createCopyBtn();
             createCopyAllBtn();
-        }
+        },
     });
 
     waitForElems({
@@ -158,6 +159,6 @@
         onmatch(elem) {
             cmInjectStyle();
             cmSetTheme(elem);
-        }
+        },
     });
 })();

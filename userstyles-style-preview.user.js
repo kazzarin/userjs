@@ -11,14 +11,14 @@
 
 (() => {
     const API = 'https://userstyles.org/api/v1';
-    const REGEX = /^https?:\/\/userstyles\.org\/styles\/([0-9]+)\/[a-z0-9\-]+$/;
+    const REGEX = /^https?:\/\/userstyles\.org\/styles\/([0-9]+)\/[a-z0-9-]+$/;
 
-    let App = {
+    const App = {
         getStyleInfo(id, cb) {
             fetch(`${API}/styles/${id}`)
-            .then(response => { return response.json(); })
-            .then(({screenshots}) => { cb(screenshots); })
-        }
+                .then((response) => response.json())
+                .then(({ screenshots }) => { cb(screenshots); });
+        },
     };
 
     waitForUrl(REGEX, () => {
@@ -26,35 +26,37 @@
             sel: '#preview_image_div',
             stop: true,
             onmatch(elem) {
+                const mainDiv = elem;
                 // Replace main image
-                let main = elem.style.backgroundImage.replace('style_screenshot_thumbnails', 'style_screenshots');
-                elem.style.backgroundImage = main;
-                let link = document.createElement('a');
+                const main = mainDiv.style.backgroundImage.replace('style_screenshot_thumbnails', 'style_screenshots');
+                mainDiv.style.backgroundImage = main;
+                const link = document.createElement('a');
                 link.id = 'preview_image_link';
-                link.href = main.match(/^url\("(.*)"\)$/)[1];
+                link.href = main.match(/^url\("(.*)"\)$/)[1]; /* eslint-disable-line prefer-destructuring */
                 link.target = '_blank';
-                elem.parentNode.insertBefore(link, elem);
-                link.appendChild(elem);
+                mainDiv.parentNode.insertBefore(link, mainDiv);
+                link.appendChild(mainDiv);
 
                 // Add links to additional images
-                let id = location.href.match(REGEX)[1];
-                App.getStyleInfo(id, images => {
+                const id = location.href.match(REGEX)[1];
+                App.getStyleInfo(id, (images) => {
                     if (images) {
-                        let div = document.createElement('div');
+                        const div = document.createElement('div');
                         div.style.marginBottom = '15px';
-                        let actions = document.querySelector('#actions_div');
+                        const actions = document.querySelector('#actions_div');
                         actions.parentNode.insertBefore(div, actions);
-                        for (let [i, img] of images.entries()) {
-                            let link = document.createElement('a');
-                            link.href = img;
-                            link.target = '_blank';
-                            link.textContent = `Image ${i + 1}`;
-                            link.style.padding = '0 10px 10px 0';
-                            div.appendChild(link);
-                        }
+
+                        images.forEach((img, i) => {
+                            const newLink = document.createElement('a');
+                            newLink.href = img;
+                            newLink.target = '_blank';
+                            newLink.textContent = `Image ${i + 1}`;
+                            newLink.style.padding = '0 10px 10px 0';
+                            div.appendChild(newLink);
+                        });
                     }
                 });
-            }
-        })
+            },
+        });
     });
 })();

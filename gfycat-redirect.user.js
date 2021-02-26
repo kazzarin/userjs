@@ -17,12 +17,9 @@
         stop: true,
         onmatch(player) {
             if (player) {
-                for (let node of player.childNodes) {
-                    if (node.type === 'video/mp4' && !node.src.includes('-mobile')) {
-                        location.replace(node.src);
-                    }
-                }
+                const vid = player.childNodes.find((node) => node.type === 'video/mp4' && !node.src.includes('-mobile'));
+                location.replace(vid.src);
             }
-        }
+        },
     });
 })();

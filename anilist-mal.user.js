@@ -15,27 +15,27 @@
     const App = {
         cache: {},
         getMalId(id, media, cb) {
-            let self = this;
-            let cacheId = `${media}-${id}`;
-            if (self.cache.hasOwnProperty(cacheId)) {
+            const self = this;
+            const cacheId = `${media}-${id}`;
+            if (Object.prototype.hasOwnProperty.call(self.cache, cacheId)) {
                 cb(self.cache[cacheId]);
             } else {
                 fetch('https://graphql.anilist.co', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        query: `query media($id: Int, $type: MediaType) { Media(id: $id, type: $type) { idMal } }`,
-                        variables: { id, 'type': media.toUpperCase() }
-                    })
+                        query: 'query media($id: Int, $type: MediaType) { Media(id: $id, type: $type) { idMal } }',
+                        variables: { id, type: media.toUpperCase() },
+                    }),
                 })
-                .then(res => { return res.json() })
-                .then(({data}) => {
-                    let malId = data.Media.idMal;
-                    self.cache[cacheId] = malId;
-                    cb(malId);
-                })
+                    .then((res) => res.json())
+                    .then(({ data }) => {
+                        const malId = data.Media.idMal;
+                        self.cache[cacheId] = malId;
+                        cb(malId);
+                    });
             }
-        }
+        },
     };
 
     waitForUrl(REGEX, () => {
@@ -46,7 +46,7 @@
             onmatch(elem) {
                 const id = location.href.match(REGEX)[2];
 
-                App.getMalId(id, media, malId => {
+                App.getMalId(id, media, (malId) => {
                     const checkLink = elem.querySelector('.mal-link');
                     if (malId) {
                         if (checkLink) {
@@ -65,13 +65,11 @@
                             link.appendChild(icon);
                             elem.appendChild(link);
                         }
-                    } else {
-                        if (checkLink) {
-                            checkLink.remove();
-                        }
+                    } else if (checkLink) {
+                        checkLink.remove();
                     }
                 });
-            }
-        })
+            },
+        });
     });
 })();

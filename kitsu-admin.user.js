@@ -16,42 +16,47 @@
     // Show full history message
     waitForElems({
         sel: '#history tbody tr td:last-child',
-        onmatch({style}) {
-            style.whiteSpace = 'normal';
-        }
+        onmatch(elem) {
+            const td = elem;
+            td.style.whiteSpace = 'normal';
+        },
     });
 
     // Open "show in app" link in new tab
     waitForElems({
         sel: '.show_in_app_member_link a',
         onmatch(elem) {
-            elem.target = '_blank';
-        }
+            const link = elem;
+            link.target = '_blank';
+        },
     });
 
     // Convert dates to local time
     // Edit history
     waitForElems({
         sel: '#history tbody tr td:first-child',
-        onmatch(date) {
+        onmatch(elem) {
+            const date = elem;
             date.textContent = moment.utc(date.textContent, format).local().format(format);
-        }
+        },
     });
     // Created at
     waitForElems({
         sel: 'td.created_at_field',
-        onmatch(date) {
+        onmatch(elem) {
+            const date = elem;
             date.textContent = moment.utc(date.textContent, format).local().format(format);
             date.title = date.textContent;
-        }
+        },
     });
     // Updated at
     waitForElems({
         sel: 'td.updated_at_field',
-        onmatch(date) {
+        onmatch(elem) {
+            const date = elem;
             date.textContent = moment.utc(date.textContent, format).local().format(format);
             date.title = date.textContent;
-        }
+        },
     });
 
     // Collapse fields
@@ -64,15 +69,20 @@
             field.classList.add('collapse');
             field.id = id;
             label.tagName = 'a';
-            label.setAttribute('data-toggle','collapse');
-            label.setAttribute('data-target',`#${id}`);
+            label.setAttribute('data-toggle', 'collapse');
+            label.setAttribute('data-target', `#${id}`);
 
-            const check = field.parentElement.classList;
-            let checkType;
-            for (let i = 0; i < check.length; i++) {
-                if (check[i].includes('_type')) {
-                    checkType = check[i];
-                    break;
+            const checkList = field.parentElement.classList;
+            const checkType = checkList.find((check) => check.includes('_type'));
+
+            function showField(select) {
+                if (select) {
+                    const fieldInput = field.querySelector(select);
+                    if (fieldInput.value !== '') {
+                        $(`#${id}`).collapse('show');
+                    }
+                } else if (field.firstChild.value !== '') {
+                    $(`#${id}`).collapse('show');
                 }
             }
 
@@ -80,25 +90,12 @@
                 showField('input');
             } else if (checkType === 'paperclip_type') {
                 showField('.toggle :first-child');
-            } else if (checkType === 'has_many_association_type' ||
-                checkType === 'has_and_belongs_to_many_association_type') {
+            } else if (checkType === 'has_many_association_type'
+                || checkType === 'has_and_belongs_to_many_association_type') {
                 showField('select');
             } else {
                 showField();
             }
-
-            function showField(select) {
-                if (select) {
-                    let fieldInput = field.querySelector(select);
-                    if (fieldInput.value !== '') {
-                        $(`#${id}`).collapse('show');
-                    }
-                } else {
-                    if (field.firstChild.value !== '') {
-                        $(`#${id}`).collapse('show');
-                    }
-                }
-            }
-        }
+        },
     });
 })();

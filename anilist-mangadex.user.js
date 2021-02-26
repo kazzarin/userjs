@@ -43,7 +43,7 @@
                         elem.appendChild(link);
                     }
                 }
-            }
-        })
+            },
+        });
     });
 })();

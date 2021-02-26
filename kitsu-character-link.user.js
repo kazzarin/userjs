@@ -12,10 +12,10 @@
 (() => {
     const API = 'https://kitsu.io/api/edge';
 
-    let App = {
+    const App = {
         cache: {},
         checkImage(elem, cb) {
-            let regex = /images\/([0-9]+)\//;
+            const regex = /images\/([0-9]+)\//;
             if (elem.src && elem.src.match(regex)) {
                 cb(elem.src.match(regex)[1]);
             } else if (elem.hasAttribute('data-src') && elem.getAttribute('data-src').match(regex)) {
@@ -25,78 +25,84 @@
             }
         },
         getMalId(id, cb) {
-            let self = this;
-            if (self.cache.hasOwnProperty(id)) {
+            const self = this;
+            if (Object.prototype.hasOwnProperty.call(self.cache, id)) {
                 cb(self.cache[id]);
             } else {
                 fetch(`${API}/characters/${id}?fields[characters]=malId`, {
                     headers: new Headers({
-                        'Accept': 'application/vnd.api+json'
-                    })
+                        Accept: 'application/vnd.api+json',
+                    }),
                 })
-                .then(response => { return response.json() })
-                .then(({data}) => {
-                    let malId = data.attributes.malId;
-                    self.cache[id] = malId;
-                    cb(malId);
-                })
+                    .then((response) => response.json())
+                    .then(({ data }) => {
+                        const { malId } = data.attributes;
+                        self.cache[id] = malId;
+                        cb(malId);
+                    });
             }
-        }
+        },
     };
 
     // Favorite characters on profile
     waitForElems({
         sel: '.favorite-characters-panel img',
         onmatch(elem) {
-            App.checkImage(elem, id => {
-                id && App.getMalId(id, malId => {
-                    if (malId) {
-                        let link = elem.parentNode.parentNode;
-                        link.href = `https://myanimelist.net/character/${malId}`;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                    }
-                });
+            App.checkImage(elem, (id) => {
+                if (id) {
+                    App.getMalId(id, (malId) => {
+                        if (malId) {
+                            const link = elem.parentNode.parentNode;
+                            link.href = `https://myanimelist.net/character/${malId}`;
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                        }
+                    });
+                }
             });
-        }
+        },
     });
 
     // Waifu/husbando
     waitForElems({
         sel: '.about-stat .waifu-wrapper img',
         onmatch(elem) {
-            App.checkImage(elem, id => {
-                id && App.getMalId(id, malId => {
-                    if (malId) {
-                        let name = document.querySelector('.waifu-name');
-                        let link = document.createElement('a');
-                        link.textContent = name.textContent;
-                        link.style.fontFamily = 'inherit';
-                        link.href = `https://myanimelist.net/character/${malId}`;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                        name.textContent = '';
-                        name.appendChild(link);
-                    }
-                });
+            App.checkImage(elem, (id) => {
+                if (id) {
+                    App.getMalId(id, (malId) => {
+                        if (malId) {
+                            const name = document.querySelector('.waifu-name');
+                            const link = document.createElement('a');
+                            link.textContent = name.textContent;
+                            link.style.fontFamily = 'inherit';
+                            link.href = `https://myanimelist.net/character/${malId}`;
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                            name.textContent = '';
+                            name.appendChild(link);
+                        }
+                    });
+                }
             });
-        }
+        },
     });
 
     // Character list on media pages
     waitForElems({
         sel: '.character-grid .character-image img',
         onmatch(elem) {
-            App.checkImage(elem, id => {
-                id && App.getMalId(id, malId => {
-                    if (malId) {
-                        let link = elem.parentNode.parentNode;
-                        link.href = `https://myanimelist.net/character/${malId}`;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                    }
-                });
+            App.checkImage(elem, (id) => {
+                if (id) {
+                    App.getMalId(id, (malId) => {
+                        if (malId) {
+                            const link = elem.parentNode.parentNode;
+                            link.href = `https://myanimelist.net/character/${malId}`;
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                        }
+                    });
+                }
             });
-        }
-    })
+        },
+    });
 })();

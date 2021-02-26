@@ -9,7 +9,7 @@
 // ==/UserScript==
 
 (() => {
-    let img = document.getElementById('image_cvs');
+    const img = document.getElementById('image_cvs');
     if (img) {
         img.removeAttribute('onclick');
         img.removeAttribute('oncontextmenu');
@@ -17,6 +17,6 @@
         img.removeAttribute('onmousedown');
         img.removeAttribute('onmouseover');
     }
-    let dummy = document.getElementById('image_cvs_cover');
+    const dummy = document.getElementById('image_cvs_cover');
     if (dummy) dummy.remove();
 })();

@@ -13,7 +13,8 @@
     waitForElems({
         sel: '.stream-item video',
         onmatch(elem) {
-            elem.loop = true;
-        }
+            const vid = elem;
+            vid.loop = true;
+        },
     });
 })();

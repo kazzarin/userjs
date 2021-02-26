@@ -13,24 +13,24 @@
     const API = 'https://www.cdjapan.co.jp/api';
     const REGEX = /^https?:\/\/vgmdb\.net\/album\/[0-9]+$/;
 
-    let App = {
+    const App = {
         getAlbumLink(code, cb) {
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: `${API}/products/json?q=${code}`,
                 onload(response) {
                     try {
-                        let json = JSON.parse(response.responseText);
+                        const json = JSON.parse(response.responseText);
                         if (json.record) { cb(json.record); }
                     } catch (err) {
-                      console.log('Failed to parse API results');
+                        console.log('Failed to parse API results');
                     }
                 },
                 onerror() {
                     console.log('Failed to get API data');
-                }
+                },
             });
-        }
+        },
     };
 
     waitForUrl(REGEX, () => {
@@ -38,23 +38,24 @@
             sel: '#album_infobit_large tr:first-child > td:last-child',
             stop: true,
             onmatch(elem) {
-                let code = elem.textContent.trim();
+                const codeElem = elem;
+                const code = codeElem.textContent.trim();
                 if (code && code !== 'N/A') {
-                    App.getAlbumLink(code, results => {
+                    App.getAlbumLink(code, (results) => {
                         if (results.length > 0) {
-                            if (results[0].prodkey == code) {
-                                let link = document.createElement('a');
+                            if (results[0].prodkey === code) {
+                                const link = document.createElement('a');
                                 link.href = `http://www.cdjapan.co.jp/product/${code}`;
                                 link.target = '_blank';
                                 link.rel = 'noopener noreferrer';
                                 link.textContent = code;
-                                elem.textContent = '';
-                                elem.appendChild(link);
+                                codeElem.textContent = '';
+                                codeElem.appendChild(link);
                             }
                         }
                     });
                 }
-            }
-        })
+            },
+        });
     });
 })();

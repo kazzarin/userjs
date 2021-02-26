@@ -14,21 +14,21 @@
     const STATUS = 'current';
     const REGEX = /\/users\/([a-zA-Z0-9_]+)\/library$/;
 
-    let App = {
+    const App = {
         openLink(link) {
-            let newLink = `/users/${link.match(REGEX)[1]}/library?media=${MEDIA}&status=${STATUS}`;
+            const newLink = `/users/${link.match(REGEX)[1]}/library?media=${MEDIA}&status=${STATUS}`;
             location.href = newLink;
-        }
+        },
     };
 
     waitForElems({
         sel: '#kitsu-navbar #exCollapsingNavbar2 li:first-child a',
         stop: true,
         onmatch(elem) {
-            let link = elem.href;
+            const link = elem.href;
             if (link.match(REGEX)) {
-                elem.addEventListener('click', () => { App.openLink(link) }, { once: true, passive: true });
+                elem.addEventListener('click', () => { App.openLink(link); }, { once: true, passive: true });
             }
-        }
+        },
     });
 })();

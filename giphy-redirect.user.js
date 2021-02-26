@@ -19,7 +19,7 @@
             onmatch(elem) {
                 const gif = elem.poster.replace('/giphy_s.gif', '/giphy.gif');
                 location.replace(gif);
-            }
-        })
+            },
+        });
     });
 })();

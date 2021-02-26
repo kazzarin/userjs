@@ -14,6 +14,6 @@
         sel: '.media--information .more-link',
         onmatch(elem) {
             elem.click();
-        }
+        },
     });
 })();

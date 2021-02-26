@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 (() => {
-    const REGEX = /^https?:\/\/(r18\.)?bookwalker\.jp\/de[a-z0-9\-]+\/$/;
+    const REGEX = /^https?:\/\/(r18\.)?bookwalker\.jp\/de[a-z0-9-]+\/$/;
 
     waitForUrl(REGEX, () => {
         const poster = document.querySelector('.main-cover .main-cover-inner img').src;
@@ -24,7 +24,7 @@
                 link.text = 'View Cover Image';
                 link.className = 'main-larger-text';
                 elem.appendChild(link);
-            }
-        })
+            },
+        });
     });
 })();

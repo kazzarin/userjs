@@ -29,7 +29,7 @@
             stop: true,
             onmatch() {
                 addCoverLink();
-            }
-        })
+            },
+        });
     });
 })();

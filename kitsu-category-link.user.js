@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 (() => {
-    const MEDIA_REGEX = /^https?:\/\/kitsu\.io\/(anime|manga)\/([^\/]+)\/?(?:\?.*)?$/;
+    const MEDIA_REGEX = /^https?:\/\/kitsu\.io\/(anime|manga)\/([^/]+)\/?(?:\?.*)?$/;
     const EXPLORE_REGEX = /^https?:\/\/kitsu\.io\/explore\/(anime|manga)\/([a-zA-Z-]+)(?!category)$/;
     const CATEGORY_REGEX = /^https?:\/\/kitsu\.io\/explore\/(anime|manga)\/category\/([a-zA-Z-]+)\/?([a-zA-Z-]+)?$/;
 
@@ -19,9 +19,10 @@
         waitForElems({
             sel: '.media--category-tag a',
             onmatch(elem) {
-                let regex = /(anime|manga)\?categories=([a-zA-Z\-]+)/;
-                elem.href = `/explore/${elem.href.match(regex)[1]}/category/${elem.href.match(regex)[2]}`;
-            }
+                const link = elem;
+                const regex = /(anime|manga)\?categories=([a-zA-Z-]+)/;
+                link.href = `/explore/${link.href.match(regex)[1]}/category/${link.href.match(regex)[2]}`;
+            },
         });
     });
 
@@ -30,11 +31,12 @@
         waitForElems({
             sel: '.explore-search-info a',
             onmatch(elem) {
-                let sort = location.href.match(EXPLORE_REGEX)[2];
-                if (sort == 'highest-rated') {
-                    elem.href = `/${location.href.match(EXPLORE_REGEX)[1]}?sort=rating`;
+                const link = elem;
+                const sort = location.href.match(EXPLORE_REGEX)[2];
+                if (sort === 'highest-rated') {
+                    link.href = `/${location.href.match(EXPLORE_REGEX)[1]}?sort=rating`;
                 }
-            }
+            },
         });
     });
 
@@ -43,15 +45,16 @@
         waitForElems({
             sel: '.explore-search-info a',
             onmatch(elem) {
+                const link = elem;
                 let newlink = `/${location.href.match(CATEGORY_REGEX)[1]}?categories=${location.href.match(CATEGORY_REGEX)[2]}`;
                 if (location.href.match(CATEGORY_REGEX)[3]) {
-                    let sort = location.href.match(CATEGORY_REGEX)[3];
-                    if (sort == 'newly-released') {
+                    const sort = location.href.match(CATEGORY_REGEX)[3];
+                    if (sort === 'newly-released') {
                         newlink += '&sort=date';
                     }
                 }
-                elem.href = newlink;
-            }
+                link.href = newlink;
+            },
         });
     });
 })();
