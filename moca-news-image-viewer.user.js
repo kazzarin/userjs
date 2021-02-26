@@ -2,7 +2,7 @@
 // @name         Moca News Image Viewer
 // @namespace    https://github.com/synthtech
 // @description  Fixes mouse events in the image viewer
-// @version      1.0
+// @version      1.0.1
 // @author       synthtech
 // @match        *://moca-news.net/article/*
 // @grant        none

@@ -2,7 +2,7 @@
 // @name         Kitsu Character Link
 // @namespace    https://github.com/synthtech
 // @description  Link characters to MAL pages
-// @version      1.1.3
+// @version      1.1.4
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/*

@@ -2,7 +2,7 @@
 // @name         Bookwalker Poster
 // @namespace    https://github.com/synthtech
 // @description  Add links to cover images
-// @version      1.2.1
+// @version      1.2.2
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://*.bookwalker.jp/*

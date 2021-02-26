@@ -2,7 +2,7 @@
 // @name         Kitsu Library Link
 // @namespace    https://github.com/synthtech
 // @description  Forces library parameters in the header link
-// @version      1.0.2
+// @version      1.0.3
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/*

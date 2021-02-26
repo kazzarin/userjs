@@ -2,7 +2,7 @@
 // @name         AniList Submission Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to submissions on user profiles
-// @version      1.1
+// @version      1.1.1
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*

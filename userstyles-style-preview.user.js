@@ -2,7 +2,7 @@
 // @name         Userstyles Style Preview
 // @namespace    https://github.com/synthtech
 // @description  Use original images for style preview
-// @version      1.1.2
+// @version      1.1.3
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://userstyles.org/*

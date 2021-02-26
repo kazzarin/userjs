@@ -2,7 +2,7 @@
 // @name         Warframe Wiki Tools
 // @namespace    https://github.com/synthtech
 // @description  Wiki tools for editing
-// @version      2.1.1
+// @version      2.1.2
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://warframe.fandom.com/*

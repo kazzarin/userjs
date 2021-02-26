@@ -2,7 +2,7 @@
 // @name         Kitsu Category Link
 // @namespace    https://github.com/synthtech
 // @description  Make category links between explore pages and advanced search more useful
-// @version      1.1.2
+// @version      1.1.3
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/*
