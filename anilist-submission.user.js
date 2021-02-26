@@ -29,7 +29,7 @@
         const currentUser = JSON.parse(localStorage.getItem('auth')).name;
 
         waitForUrl(REGEX, () => {
-            const [url, user] = location.href.match(REGEX); /* eslint-disable-line no-unused-vars */
+            const user = location.href.match(REGEX)[1];
             waitForElems({
                 sel: '.header-wrap .nav-wrap .nav.container',
                 stop: true,
