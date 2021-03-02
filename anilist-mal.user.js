@@ -12,6 +12,22 @@
 (() => {
     const REGEX = /^https?:\/\/anilist\.co\/(anime|manga)\/([0-9]+)(\/.*)?$/;
 
+    async function getStore() {
+        const store = sessionStorage.getItem('anilist-mal');
+        if (!store) {
+            const newStore = [];
+            sessionStorage.setItem('anilist-mal', JSON.stringify(newStore));
+            return newStore;
+        }
+        return JSON.parse(store);
+    }
+
+    async function updateStore(data) {
+        const store = await getStore();
+        store.push(data);
+        sessionStorage.setItem('anilist-mal', JSON.stringify(store));
+    }
+
     async function fetchId(id) {
         const res = await fetch('https://graphql.anilist.co', {
             method: 'POST',
@@ -23,15 +39,19 @@
         });
         const { data } = await res.json();
         const malId = data.Media.idMal;
-
+        updateStore({ anilist: id, mal: malId });
         return malId;
     }
 
     async function checkStore(id) {
-        const store = sessionStorage.getItem('anilist-mal');
+        const store = await getStore();
         if (store) {
-            const malId = JSON.parse(store).find((key) => key === id);
-            return malId;
+            const idList = store.map((item) => item.anilist);
+            const match = idList.indexOf(id);
+            if (store[match]) {
+                const malId = store[match].mal;
+                return malId;
+            }
         }
         const malId = await fetchId(id);
         return malId;
@@ -40,8 +60,7 @@
     async function getLink(elem) {
         const [, media, id] = location.href.match(REGEX);
 
-        // const malId = await checkStore(id);
-        const malId = await fetchId(id);
+        const malId = await checkStore(parseInt(id));
 
         const checkLink = elem.querySelector('.mal-link');
         if (malId) {

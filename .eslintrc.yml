@@ -13,6 +13,7 @@ rules:
   linebreak-style: [0]
   no-restricted-globals: [0]
   no-underscore-dangle: [0]
+  radix: [0]
 globals:
   waitForElems: readonly
   waitForUrl: readonly
