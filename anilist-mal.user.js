@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.0
+// @version      2.1
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -11,6 +11,21 @@
 
 (() => {
     const REGEX = /^https?:\/\/anilist\.co\/(anime|manga)\/([0-9]+)(\/.*)?$/;
+
+    const linkAttrs = {
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        className: 'mal-link',
+    };
+
+    const imgAttrs = {
+        src: 'https://cdn.myanimelist.net/images/favicon.ico',
+        style: {
+            height: '1.9rem',
+            paddingLeft: '5px',
+            verticalAlign: 'top',
+        },
+    };
 
     async function getStore() {
         const store = sessionStorage.getItem('anilist-mal');
@@ -57,26 +72,35 @@
         return malId;
     }
 
+    async function newElem(type, attrs) {
+        const elem = document.createElement(type);
+        if (attrs) {
+            Object.entries(attrs).forEach((attr) => {
+                const [k, v] = attr;
+                if (k === 'style') {
+                    Object.entries(v).forEach((prop) => {
+                        const [l, w] = prop;
+                        elem.style[l] = w;
+                    });
+                } else {
+                    elem[k] = v;
+                }
+            });
+        }
+        return elem;
+    }
+
     async function getLink(elem) {
         const [, media, id] = location.href.match(REGEX);
-
         const malId = await checkStore(parseInt(id));
-
         const checkLink = elem.querySelector('.mal-link');
         if (malId) {
             if (checkLink) {
                 checkLink.href = `https://myanimelist.net/${media}/${malId}`;
             } else {
-                const link = document.createElement('a');
-                const icon = document.createElement('img');
+                const link = await newElem('a', linkAttrs);
+                const icon = await newElem('img', imgAttrs);
                 link.href = `https://myanimelist.net/${media}/${malId}`;
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
-                link.className = 'mal-link';
-                icon.src = 'https://cdn.myanimelist.net/images/favicon.ico';
-                icon.style.height = '1.9rem';
-                icon.style.paddingLeft = '5px';
-                icon.style.verticalAlign = 'top';
                 link.appendChild(icon);
                 elem.appendChild(link);
             }
