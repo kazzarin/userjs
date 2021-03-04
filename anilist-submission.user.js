@@ -2,7 +2,7 @@
 // @name         AniList Submission Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to submissions on user profiles
-// @version      1.1.2
+// @version      1.1.3
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -29,10 +29,9 @@
         const currentUser = JSON.parse(localStorage.getItem('auth')).name;
 
         waitForUrl(REGEX, () => {
-            const user = location.href.match(REGEX)[1];
+            const [, user] = location.href.match(REGEX);
             waitForElems({
                 sel: '.header-wrap .nav-wrap .nav.container',
-                stop: true,
                 onmatch(elem) {
                     const checkLink = elem.querySelector('#submissions-link');
 
