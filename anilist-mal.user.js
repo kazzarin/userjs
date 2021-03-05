@@ -12,13 +12,13 @@
 (() => {
     const REGEX = /^https?:\/\/anilist\.co\/(anime|manga)\/([0-9]+)(\/.*)?$/;
 
-    const linkAttrs = {
+    const linkProps = {
         target: '_blank',
         rel: 'noopener noreferrer',
-        className: 'mal-link',
+        id: 'mal-link',
     };
 
-    const imgAttrs = {
+    const imgProps = {
         src: 'https://cdn.myanimelist.net/images/favicon.ico',
         style: {
             height: '1.9rem',
@@ -72,10 +72,10 @@
         return malId;
     }
 
-    async function newElem(type, attrs) {
+    async function newElem(type, props) {
         const elem = document.createElement(type);
-        if (attrs) {
-            Object.entries(attrs).forEach((attr) => {
+        if (props) {
+            Object.entries(props).forEach((attr) => {
                 const [k, v] = attr;
                 if (k === 'style') {
                     Object.entries(v).forEach((prop) => {
@@ -93,13 +93,13 @@
     async function getLink(elem) {
         const [, media, id] = location.href.match(REGEX);
         const malId = await checkStore(parseInt(id));
-        const checkLink = elem.querySelector('.mal-link');
+        const checkLink = document.querySelector('#mal-link');
         if (malId) {
             if (checkLink) {
                 checkLink.href = `https://myanimelist.net/${media}/${malId}`;
             } else {
-                const link = await newElem('a', linkAttrs);
-                const icon = await newElem('img', imgAttrs);
+                const link = await newElem('a', linkProps);
+                const icon = await newElem('img', imgProps);
                 link.href = `https://myanimelist.net/${media}/${malId}`;
                 link.appendChild(icon);
                 elem.appendChild(link);
@@ -112,8 +112,8 @@
     waitForUrl(REGEX, () => {
         waitForElems({
             sel: '.media .header .content > h1',
-            onmatch(elem) {
-                getLink(elem);
+            onmatch: async (elem) => {
+                await getLink(elem);
             },
         });
     });
