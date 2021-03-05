@@ -30,17 +30,18 @@
     async function getStore() {
         const store = sessionStorage.getItem('anilist-mal');
         if (!store) {
-            const newStore = [];
-            sessionStorage.setItem('anilist-mal', JSON.stringify(newStore));
+            const newStore = new Map();
+            sessionStorage.setItem('anilist-mal', JSON.stringify(Array.from(newStore.entries())));
             return newStore;
         }
-        return JSON.parse(store);
+        return new Map(JSON.parse(store));
     }
 
     async function updateStore(data) {
         const store = await getStore();
-        store.push(data);
-        sessionStorage.setItem('anilist-mal', JSON.stringify(store));
+        const [k, v] = data;
+        store.set(k, v);
+        sessionStorage.setItem('anilist-mal', JSON.stringify(Array.from(store.entries())));
     }
 
     async function fetchId(id) {
@@ -54,18 +55,15 @@
         });
         const { data } = await res.json();
         const malId = data.Media.idMal;
-        updateStore({ anilist: id, mal: malId });
+        updateStore([id, malId]);
         return malId;
     }
 
     async function checkStore(id) {
         const store = await getStore();
         if (store) {
-            const idList = store.map((item) => item.anilist);
-            const match = idList.indexOf(id);
-            if (store[match]) {
-                const malId = store[match].mal;
-                return malId;
+            if (store.has(id)) {
+                return store.get(id);
             }
         }
         const malId = await fetchId(id);
