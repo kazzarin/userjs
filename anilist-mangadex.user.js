@@ -2,7 +2,7 @@
 // @name         AniList MangaDex Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MangaDex search on manga pages
-// @version      1.0.4
+// @version      1.1.0
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -12,37 +12,61 @@
 (() => {
     const REGEX = /^https?:\/\/anilist\.co\/(anime|manga)\/[0-9]+(\/.*)?$/;
 
-    waitForUrl(REGEX, () => {
-        const media = location.href.match(REGEX)[1];
-        waitForElems({
-            sel: '.header .content h1',
-            stop: true,
-            onmatch(elem) {
-                const title = elem.textContent;
-                const checkLink = elem.querySelector('.mangadex-link');
-
-                if (media === 'anime') {
-                    if (checkLink) {
-                        checkLink.remove();
-                    }
-                } else if (media === 'manga') {
-                    if (checkLink) {
-                        checkLink.href = `https://mangadex.org/quick_search/${title}`;
-                    } else {
-                        const link = document.createElement('a');
-                        const icon = document.createElement('img');
-                        link.href = `https://mangadex.org/quick_search/${title}`;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                        link.className = 'mangadex-link';
-                        icon.src = 'https://mangadex.org/favicon-96x96.png';
-                        icon.style.height = '1.9rem';
-                        icon.style.paddingLeft = '5px';
-                        icon.style.verticalAlign = 'top';
-                        link.appendChild(icon);
-                        elem.appendChild(link);
-                    }
+    async function newElem(type, props) {
+        const elem = document.createElement(type);
+        if (props) {
+            Object.entries(props).forEach((attr) => {
+                const [k, v] = attr;
+                if (k === 'style') {
+                    Object.entries(v).forEach((prop) => {
+                        const [l, w] = prop;
+                        elem.style[l] = w;
+                    });
+                } else {
+                    elem[k] = v;
                 }
+            });
+        }
+        return elem;
+    }
+
+    async function createLink(elem) {
+        const [, media] = location.href.match(REGEX);
+        const checkLink = document.querySelector('#md-link');
+
+        if (media === 'anime') {
+            if (checkLink) checkLink.remove();
+        } else if (media === 'manga') {
+            const title = encodeURIComponent(elem.textContent.trim());
+
+            if (checkLink) checkLink.href = `https://mangadex.org/titles/#${title}`;
+            else {
+                const link = await newElem('a', {
+                    href: `https://mangadex.org/titles/#${title}`,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    id: 'md-link',
+                });
+                const icon = await newElem('img', {
+                    src: 'https://mangadex.org/icons/favicon-32x32.png',
+                    style: {
+                        height: '1.9rem',
+                        paddingLeft: '5px',
+                        verticalAlign: 'top',
+                    },
+                });
+                link.appendChild(icon);
+                elem.appendChild(link);
+            }
+        }
+    }
+
+    waitForUrl(REGEX, () => {
+        waitForElems({
+            sel: '.media .header .content > h1',
+            stop: true,
+            onmatch: async (elem) => {
+                await createLink(elem);
             },
         });
     });
