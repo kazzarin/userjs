@@ -2,7 +2,7 @@
 // @name         Giphy Redirect
 // @namespace    https://github.com/synthtech
 // @description  Redirect giphy pages to gif
-// @version      1.1.0
+// @version      1.1.1
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://giphy.com/*
@@ -19,7 +19,7 @@
             onmatch(elem) {
                 if (elem.poster) {
                     const gif = elem.poster.replace('/giphy_s.gif', '/source.gif');
-                    location.replace(gif);
+                    location.assign(gif);
                 }
             },
         });
