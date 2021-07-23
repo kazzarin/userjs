@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.2
+// @version      2.3
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -18,13 +18,13 @@
         id: 'mal-link',
     };
 
-    const imgProps = {
-        src: 'https://cdn.myanimelist.net/images/favicon.ico',
+    const labelProps = {
+        className: 'adult-label',
+        textContent: 'MAL',
         style: {
-            height: '1.9rem',
-            paddingLeft: '5px',
-            verticalAlign: 'top',
+            background: '#2e51a2',
         },
+        id: 'mal-label',
     };
 
     async function getStore() {
@@ -70,7 +70,7 @@
         return malId;
     }
 
-    async function newElem(type, props) {
+    async function newElem(type, props, attrs) {
         const elem = document.createElement(type);
         if (props) {
             Object.entries(props).forEach((attr) => {
@@ -85,6 +85,12 @@
                 }
             });
         }
+        if (attrs) {
+            Object.entries(attrs).forEach((attr) => {
+                const [k, v] = attr;
+                elem.setAttribute(k, v);
+            });
+        }
         return elem;
     }
 
@@ -97,10 +103,11 @@
             if (checkLink) {
                 checkLink.href = `https://myanimelist.net/${media}/${malId}`;
             } else {
+                const dataAttr = document.querySelector('.header-wrap').__vue__.$options._scopeId;
                 const link = await newElem('a', linkProps);
-                const icon = await newElem('img', imgProps);
+                const label = await newElem('div', labelProps, { [dataAttr]: '' });
                 link.href = `https://myanimelist.net/${media}/${malId}`;
-                link.appendChild(icon);
+                link.appendChild(label);
                 elem.appendChild(link);
             }
         } else if (checkLink) {
