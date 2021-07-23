@@ -2,7 +2,7 @@
 // @name         AniList Header Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to submit anime/manga in header
-// @version      1.0
+// @version      1.0.1
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -64,8 +64,7 @@
     }
 
     async function addSubmitLinks(elem) {
-        const elemAttr = elem.querySelector(':first-child').getAttributeNames();
-        const dataAttr = elemAttr.find((attr) => attr.includes('data'));
+        const dataAttr = document.querySelector('#nav').__vue__.$options._scopeId;
         const animeLink = await newElem('a', animeProps, { [dataAttr]: '' });
         const mangaLink = await newElem('a', mangaProps, { [dataAttr]: '' });
         animeLink.addEventListener('click', clickHandler);

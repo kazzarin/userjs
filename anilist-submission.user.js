@@ -2,7 +2,7 @@
 // @name         AniList Submission Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to submissions on user profiles
-// @version      1.1.3
+// @version      1.1.4
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -43,8 +43,7 @@
                             checkLink.href = `/user/${user}/submissions`;
                         }
                     } else if (user !== currentUser) {
-                        const elemAttr = elem.querySelector(':first-child').getAttributeNames();
-                        const dataAttr = elemAttr.find((attr) => attr.includes('data'));
+                        const dataAttr = document.querySelector('.header-wrap').__vue__.$options._scopeId;
 
                         const link = document.createElement('a');
                         link.href = `/user/${user}/submissions`;
