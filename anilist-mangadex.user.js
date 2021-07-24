@@ -2,7 +2,7 @@
 // @name         AniList MangaDex Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MangaDex search on manga pages
-// @version      1.1.0
+// @version      1.2.0
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -12,7 +12,17 @@
 (() => {
     const REGEX = /^https?:\/\/anilist\.co\/(anime|manga)\/[0-9]+(\/.*)?$/;
 
-    async function newElem(type, props) {
+    const labelProps = {
+        className: 'adult-label',
+        textContent: 'MD',
+        style: {
+            background: '#ff6740',
+            cursor: 'pointer',
+        },
+        id: 'md-label',
+    };
+
+    async function newElem(type, props, attrs) {
         const elem = document.createElement(type);
         if (props) {
             Object.entries(props).forEach((attr) => {
@@ -27,36 +37,36 @@
                 }
             });
         }
+        if (attrs) {
+            Object.entries(attrs).forEach((attr) => {
+                const [k, v] = attr;
+                elem.setAttribute(k, v);
+            });
+        }
         return elem;
+    }
+
+    function clickHandler() {
+        const title = document.querySelector('.sidebar .data').__vue__.media.title.userPreferred;
+        const queryUrl = `https://mangadex.org/titles?q=${encodeURIComponent(title)}`;
+        window.open(queryUrl, '_blank', 'noopener,noreferrer');
     }
 
     async function createLink(elem) {
         const [, media] = location.href.match(REGEX);
-        const checkLink = document.querySelector('#md-link');
+        const checkLink = document.querySelector('#md-label');
 
         if (media === 'anime') {
-            if (checkLink) checkLink.remove();
+            if (checkLink) {
+                checkLink.removeEventListener('click', clickHandler);
+                checkLink.remove();
+            }
         } else if (media === 'manga') {
-            const title = encodeURIComponent(elem.textContent.trim());
-
-            if (checkLink) checkLink.href = `https://mangadex.org/titles/#${title}`;
-            else {
-                const link = await newElem('a', {
-                    href: `https://mangadex.org/titles/#${title}`,
-                    target: '_blank',
-                    rel: 'noopener noreferrer',
-                    id: 'md-link',
-                });
-                const icon = await newElem('img', {
-                    src: 'https://mangadex.org/icons/favicon-32x32.png',
-                    style: {
-                        height: '1.9rem',
-                        paddingLeft: '5px',
-                        verticalAlign: 'top',
-                    },
-                });
-                link.appendChild(icon);
-                elem.appendChild(link);
+            if (!checkLink) {
+                const dataAttr = document.querySelector('.header-wrap').__vue__.$options._scopeId;
+                const label = await newElem('div', labelProps, { [dataAttr]: '' });
+                label.addEventListener('click', clickHandler);
+                elem.appendChild(label);
             }
         }
     }
