@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.3
+// @version      2.4
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 (() => {
-    const REGEX = /^https?:\/\/anilist\.co\/(anime|manga)\/([0-9]+)(\/.*)?$/;
+    const regex = /\/(anime|manga)\/([0-9]+)(\/.*)?/;
 
     const linkProps = {
         target: '_blank',
@@ -96,7 +96,7 @@
 
     // TODO: Split this up and add more URL checks before checking storage
     async function getLink(elem) {
-        const [, media, id] = location.href.match(REGEX);
+        const [, media, id] = location.href.match(regex);
         const malId = await checkStore(parseInt(id));
         const checkLink = document.querySelector('#mal-link');
         if (malId) {
@@ -115,14 +115,15 @@
         }
     }
 
-    // TODO: Need to find a more reliable way to watch route changes from Vue router
-    waitForUrl(REGEX, () => {
-        waitForElems({
-            sel: '.media .header .content > h1',
-            stop: true,
-            onmatch: async (elem) => {
-                await getLink(elem);
-            },
-        });
+    document.getElementById('app').__vue__.$watch('$route', (newRoute) => {
+        if (newRoute.path.match(regex)) {
+            waitForElems({
+                sel: '.media .header .content > h1',
+                stop: true,
+                onmatch: async (elem) => {
+                    await getLink(elem);
+                },
+            });
+        }
     });
 })();
