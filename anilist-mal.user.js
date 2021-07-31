@@ -2,9 +2,8 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.4
+// @version      2.5
 // @author       synthtech
-// @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
 // @grant        none
 // ==/UserScript==
@@ -96,7 +95,7 @@
 
     // TODO: Split this up and add more URL checks before checking storage
     async function getLink(elem) {
-        const [, media, id] = location.href.match(regex);
+        const [, media, id] = location.pathname.match(regex);
         const malId = await checkStore(parseInt(id));
         const checkLink = document.querySelector('#mal-link');
         if (malId) {
@@ -115,15 +114,21 @@
         }
     }
 
+    const watchElem = new MutationObserver(async (_mutations, observer) => {
+        const elem = document.querySelector('.media .header .content > h1');
+        if (elem) {
+            observer.disconnect();
+            await getLink(elem);
+        }
+    });
+
+    if (regex.test(location.pathname)) {
+        watchElem.observe(document.body, { subtree: true, childList: true });
+    }
+
     document.getElementById('app').__vue__.$watch('$route', (newRoute) => {
-        if (newRoute.path.match(regex)) {
-            waitForElems({
-                sel: '.media .header .content > h1',
-                stop: true,
-                onmatch: async (elem) => {
-                    await getLink(elem);
-                },
-            });
+        if (regex.test(newRoute.path)) {
+            watchElem.observe(document.body, { subtree: true, childList: true });
         }
     });
 })();
