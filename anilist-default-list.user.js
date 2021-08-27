@@ -2,7 +2,7 @@
 // @name         AniList Default List
 // @namespace    https://github.com/synthtech
 // @description  Set default list when navigating from header
-// @version      1.0
+// @version      1.0.1
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -17,7 +17,7 @@
     };
 
     function clickHandler(e) {
-        if (e.target.href.match(regex)) {
+        if (e.target && e.target.href.match(regex)) {
             const [,, media] = e.target.href.match(regex);
             const [type] = media.split('list');
             waitForElems({
