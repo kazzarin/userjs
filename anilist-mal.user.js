@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.5
+// @version      2.5.1
 // @author       synthtech
 // @match        *://anilist.co/*
 // @grant        none
@@ -114,21 +114,33 @@
         }
     }
 
-    const watchElem = new MutationObserver(async (_mutations, observer) => {
-        const elem = document.querySelector('.media .header .content > h1');
-        if (elem) {
-            observer.disconnect();
-            await getLink(elem);
-        }
-    });
-
-    if (regex.test(location.pathname)) {
-        watchElem.observe(document.body, { subtree: true, childList: true });
+    function watchElem(watch, func) {
+        const mut = new MutationObserver(async (_mutations, observer) => {
+            const elem = document.querySelector(watch);
+            if (elem) {
+                observer.disconnect();
+                await func(elem);
+            }
+        });
+        mut.observe(document.body, { subtree: true, childList: true });
     }
 
-    document.getElementById('app').__vue__.$watch('$route', (newRoute) => {
-        if (regex.test(newRoute.path)) {
-            watchElem.observe(document.body, { subtree: true, childList: true });
-        }
-    });
+    async function routeWatch(elem) {
+        elem.__vue__.$watch('$route', (newRoute) => {
+            if (regex.test(newRoute.path)) {
+                watchElem('.media .header .content > h1', getLink);
+            }
+        });
+    }
+
+    if (regex.test(location.pathname)) {
+        watchElem('.media .header .content > h1', getLink);
+    }
+
+    const app = document.getElementById('app');
+    if (app) {
+        routeWatch(app);
+    } else {
+        watchElem('#app', routeWatch);
+    }
 })();
