@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.5.1
+// @version      2.5.2
 // @author       synthtech
 // @match        *://anilist.co/*
 // @grant        none
@@ -25,6 +25,8 @@
         },
         id: 'mal-label',
     };
+
+    const app = document.getElementById('app');
 
     async function getStore() {
         const store = sessionStorage.getItem('anilist-mal');
@@ -69,6 +71,7 @@
         return malId;
     }
 
+    // TODO: Create reusable elem only once on script load
     async function newElem(type, props, attrs) {
         const elem = document.createElement(type);
         if (props) {
@@ -114,7 +117,7 @@
         }
     }
 
-    function watchElem(watch, func) {
+    async function watchElem(watch, func) {
         const mut = new MutationObserver(async (_mutations, observer) => {
             const elem = document.querySelector(watch);
             if (elem) {
@@ -125,10 +128,11 @@
         mut.observe(document.body, { subtree: true, childList: true });
     }
 
-    async function routeWatch(elem) {
-        elem.__vue__.$watch('$route', (newRoute) => {
+    async function routeWatch() {
+        while (!app?.__vue__) if (app?.__vue__) break;
+        app.__vue__.$watch('$route', async (newRoute) => {
             if (regex.test(newRoute.path)) {
-                watchElem('.media .header .content > h1', getLink);
+                await watchElem('.media .header .content > h1', getLink);
             }
         });
     }
@@ -137,10 +141,5 @@
         watchElem('.media .header .content > h1', getLink);
     }
 
-    const app = document.getElementById('app');
-    if (app) {
-        routeWatch(app);
-    } else {
-        watchElem('#app', routeWatch);
-    }
+    routeWatch();
 })();
