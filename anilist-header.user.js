@@ -2,7 +2,7 @@
 // @name         AniList Header Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to submit anime/manga in header
-// @version      1.0.1
+// @version      1.0.2
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -14,29 +14,33 @@
         className: 'link',
         href: '/edit/anime/new',
         textContent: 'new anime',
-        id: 'submit-anime-link',
+        id: 'submit-anime',
     };
 
     const mangaProps = {
         className: 'link',
         href: '/edit/manga/new',
         textContent: 'new manga',
-        id: 'submit-manga-link',
+        id: 'submit-manga',
     };
 
-    // Bug: Paths will get mixed up if navigating between submission pages
-    function navigate(id) {
+    async function navigate(id) {
         const app = document.getElementById('app');
-        if (id === 'submit-anime-link') {
-            app.__vue__._router.push({ path: '/edit/anime/new' });
-        } else if (id === 'submit-manga-link') {
-            app.__vue__._router.push({ path: '/edit/manga/new' });
+        // Redirecting to a different component page is necessary to avoid
+        // buggy navigation between submission pages
+        if (id === 'submit-anime') {
+            await app.__vue__.$router.push({ name: 'Maintenance' });
+            await app.__vue__.$router.push({ path: '/edit/anime/new' });
+        }
+        if (id === 'submit-manga') {
+            await app.__vue__.$router.push({ name: 'Maintenance' });
+            await app.__vue__.$router.push({ path: '/edit/manga/new' });
         }
     }
 
     function clickHandler(e) {
         e.preventDefault();
-        navigate(e.target.id);
+        navigate(e.target?.id);
     }
 
     async function newElem(type, props, attrs) {
