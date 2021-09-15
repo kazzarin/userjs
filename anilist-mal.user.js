@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.5.2
+// @version      2.5.3
 // @author       synthtech
 // @match        *://anilist.co/*
 // @grant        none
@@ -55,7 +55,7 @@
             }),
         });
         const { data } = await res.json();
-        const malId = data.Media.idMal;
+        const malId = data.Media?.idMal;
         updateStore([id, malId]);
         return malId;
     }
@@ -129,12 +129,15 @@
     }
 
     async function routeWatch() {
-        while (!app?.__vue__) if (app?.__vue__) break;
-        app.__vue__.$watch('$route', async (newRoute) => {
-            if (regex.test(newRoute.path)) {
-                await watchElem('.media .header .content > h1', getLink);
-            }
-        });
+        if (Object.hasOwn(app, '__vue__')) {
+            app.__vue__.$watch('$route', async (newRoute) => {
+                if (regex.test(newRoute.path)) {
+                    await watchElem('.media .header .content > h1', getLink);
+                }
+            });
+        } else {
+            setTimeout(routeWatch, 100);
+        }
     }
 
     if (regex.test(location.pathname)) {
