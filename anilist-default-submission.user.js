@@ -2,7 +2,7 @@
 // @name         AniList Default Submission
 // @namespace    https://github.com/synthtech
 // @description  Set default submission category when navigating to your submissions
-// @version      1.0
+// @version      1.0.1
 // @author       synthtech
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
@@ -14,7 +14,7 @@
     const type = 'manga';
 
     function clickHandler(e) {
-        if (e.target.href.match(regex)) {
+        if (regex.test(e.target?.href)) {
             waitForElems({
                 sel: '.submissions',
                 onmatch(elem) {
