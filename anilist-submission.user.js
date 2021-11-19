@@ -2,9 +2,9 @@
 // @name         AniList Submission Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to submissions on user profiles
-// @version      1.2.0
+// @version      1.2.1
 // @author       synthtech
-// @match        *://anilist.co/*
+// @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==
 
@@ -61,13 +61,13 @@
     async function routeWatch() {
         const app = document.getElementById('app');
         if (app.__vue__) {
-            app.__vue__.$watch('$route', async (newRoute) => {
+            app.__vue__.$router.afterEach((newRoute) => {
                 if (regex.test(newRoute.path)) {
-                    await watchElem('.user .nav.container', addLink);
+                    watchElem('.user .nav.container', addLink);
                 }
             });
         } else {
-            setTimeout(routeWatch, 100);
+            setTimeout(routeWatch, 300);
         }
     }
 
