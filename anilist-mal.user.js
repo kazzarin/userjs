@@ -2,13 +2,14 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com/synthtech
 // @description  Add links to MAL on media pages
-// @version      2.5.4
+// @version      2.6.0
 // @author       synthtech
 // @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==
 
 (() => {
+    const store = new Map();
     const regex = /\/(anime|manga)\/([0-9]+)(\/.*)?/;
 
     const linkProps = {
@@ -26,21 +27,9 @@
         id: 'mal-label',
     };
 
-    async function getStore() {
-        const store = sessionStorage.getItem('anilist-mal');
-        if (!store) {
-            const newStore = new Map();
-            sessionStorage.setItem('anilist-mal', JSON.stringify(Array.from(newStore.entries())));
-            return newStore;
-        }
-        return new Map(JSON.parse(store));
-    }
-
     async function updateStore(data) {
-        const store = await getStore();
         const [k, v] = data;
         store.set(k, v);
-        sessionStorage.setItem('anilist-mal', JSON.stringify(Array.from(store.entries())));
     }
 
     async function fetchId(id) {
@@ -59,7 +48,6 @@
     }
 
     async function checkStore(id) {
-        const store = await getStore();
         if (store) {
             if (store.has(id)) {
                 return store.get(id);
