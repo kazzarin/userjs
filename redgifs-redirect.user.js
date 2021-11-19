@@ -1,22 +1,22 @@
 // ==UserScript==
-// @name         Gfycat Redirect
+// @name         Redgifs Redirect
 // @namespace    https://github.com/synthtech
-// @description  Redirect gfycat pages to source video
+// @description  Redirect redgifs pages to source video
 // @version      3.0.0
 // @author       synthtech
-// @match        https://gfycat.com/*
+// @match        https://www.redgifs.com/*
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
 
 (() => {
-    const regex = /\/([A-Za-z-]+)/;
+    const regex = /\/watch\/([A-Za-z-]+)/;
 
     async function fetchVid(id) {
-        const res = await fetch(`https://api.gfycat.com/v1/gfycats/${id}`);
+        const res = await fetch(`https://api.redgifs.com/v2/gifs/${id}`);
         if (res.ok) {
-            const { gfyItem } = await res.json();
-            return gfyItem.mp4Url;
+            const { gif } = await res.json();
+            return gif.urls.hd;
         }
         return null;
     }
