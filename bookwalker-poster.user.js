@@ -2,29 +2,38 @@
 // @name         Bookwalker Poster
 // @namespace    https://github.com/synthtech
 // @description  Add links to cover images
-// @version      1.2.2
+// @version      2.0.0
 // @author       synthtech
-// @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
-// @match        *://*.bookwalker.jp/*
+// @match        https://*.bookwalker.jp/*
 // @grant        none
 // ==/UserScript==
 
 (() => {
-    const REGEX = /^https?:\/\/(r18\.)?bookwalker\.jp\/de[a-z0-9-]+\/$/;
+    function addLink(elem) {
+        const poster = elem.querySelector('.p-main__thumb .m-thumb__image img').getAttribute('data-original');
+        if (poster) {
+            const wrap = document.createElement('p');
+            wrap.id = 'cover-link';
+            wrap.className = 'p-pages';
+            const link = document.createElement('a');
+            link.href = poster;
+            link.target = '_blank';
+            link.text = 'View Cover Image';
+            wrap.appendChild(link);
+            elem.appendChild(wrap);
+        }
+    }
 
-    waitForUrl(REGEX, () => {
-        const poster = document.querySelector('.main-cover .main-cover-inner img').src;
-        waitForElems({
-            sel: '.main-cover .main-larger',
-            stop: true,
-            onmatch(elem) {
-                const link = document.createElement('a');
-                link.href = poster;
-                link.target = '_blank';
-                link.text = 'View Cover Image';
-                link.className = 'main-larger-text';
-                elem.appendChild(link);
-            },
+    function watchElem(watch, func) {
+        const mut = new MutationObserver((_mutations, observer) => {
+            const elem = document.querySelector(watch);
+            if (elem) {
+                func(elem);
+                observer.disconnect();
+            }
         });
-    });
+        mut.observe(document.body, { subtree: true, childList: true });
+    }
+
+    watchElem('.p-main__left', addLink);
 })();
