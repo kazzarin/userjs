@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         eBookJapan Cover
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Add links to cover images
 // @version      1.0.2
-// @author       synthtech
+// @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://ebookjapan.yahoo.co.jp/*
 // @grant        none

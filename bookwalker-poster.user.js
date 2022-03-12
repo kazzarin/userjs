@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Bookwalker Poster
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Add links to cover images
 // @version      2.0.0
-// @author       synthtech
+// @author       Zarin
 // @match        https://*.bookwalker.jp/*
 // @grant        none
 // ==/UserScript==

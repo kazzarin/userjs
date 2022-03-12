@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         AniList Default List
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Set default list when navigating from header
 // @version      1.0.3
-// @author       synthtech
+// @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
 // @grant        none

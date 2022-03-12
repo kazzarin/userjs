@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         AniList MangaDex Links
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Add links to MangaDex search on manga pages
 // @version      1.2.0
-// @author       synthtech
+// @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
 // @grant        none

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Redgifs Redirect
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Redirect redgifs pages to source video
 // @version      3.0.0
-// @author       synthtech
+// @author       Zarin
 // @match        https://www.redgifs.com/*
 // @grant        none
 // @run-at       document-start

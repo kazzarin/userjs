@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Gfycat Redirect
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Redirect gfycat pages to source video
 // @version      3.0.0
-// @author       synthtech
+// @author       Zarin
 // @match        https://gfycat.com/*
 // @grant        none
 // @run-at       document-start

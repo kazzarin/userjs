@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         AniList Submission Manual Dark Mode Fix
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Toggles dark mode automatically
 // @version      1.0.0
-// @author       synthtech
+// @author       Zarin
 // @match        https://submission-manual.anilist.co/*
 // @grant        none
 // ==/UserScript==

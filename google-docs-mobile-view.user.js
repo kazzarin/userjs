@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Google Docs Mobile View
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Add an option to use the mobile view
 // @version      1.0.0
-// @author       synthtech
+// @author       Zarin
 // @match        https://docs.google.com/*
 // @grant        none
 // ==/UserScript==

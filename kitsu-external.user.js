@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Kitsu External Links
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Add external links to Kitsu media pages
 // @version      2.0.0
-// @author       synthtech
+// @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/*
 // @grant        none

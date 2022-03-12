@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         AniList MAL Links
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Add links to MAL on media pages
 // @version      2.6.0
-// @author       synthtech
+// @author       Zarin
 // @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==

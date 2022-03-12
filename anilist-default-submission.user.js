@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         AniList Default Submission
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Set default submission category when navigating to your submissions
 // @version      1.0.1
-// @author       synthtech
+// @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
 // @match        *://anilist.co/*
 // @grant        none

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         AniList Submission Links
-// @namespace    https://github.com/synthtech
+// @namespace    https://github.com
 // @description  Add links to submissions on user profiles
 // @version      1.2.1
-// @author       synthtech
+// @author       Zarin
 // @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==
