@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Add links to submissions on user profiles
 // @version      1.2.1
+// @license      0BSD
 // @author       Zarin
 // @match        https://anilist.co/*
 // @grant        none

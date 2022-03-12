@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Add an option to use the mobile view
 // @version      1.0.0
+// @license      0BSD
 // @author       Zarin
 // @match        https://docs.google.com/*
 // @grant        none

@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Add links to cover images
 // @version      2.0.0
+// @license      0BSD
 // @author       Zarin
 // @match        https://*.bookwalker.jp/*
 // @grant        none

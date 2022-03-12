@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Redirect gfycat pages to source video
 // @version      3.0.0
+// @license      0BSD
 // @author       Zarin
 // @match        https://gfycat.com/*
 // @grant        none

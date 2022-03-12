@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Add links to MAL on media pages
 // @version      2.6.0
+// @license      0BSD
 // @author       Zarin
 // @match        https://anilist.co/*
 // @grant        none

@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Toggles dark mode automatically
 // @version      1.0.0
+// @license      0BSD
 // @author       Zarin
 // @match        https://submission-manual.anilist.co/*
 // @grant        none

@@ -2,7 +2,8 @@
   "name": "userjs",
   "version": "1.0.0",
   "description": "Personal userjs",
-  "license": "Unlicense",
+  "license": "0BSD",
+  "author": "Zarin",
   "private": true,
   "repository": {
     "type": "git",

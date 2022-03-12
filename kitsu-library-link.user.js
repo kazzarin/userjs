@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Forces library parameters in the header link
 // @version      1.0.3
+// @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
 // @match        *://kitsu.io/*

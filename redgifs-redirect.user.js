@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Redirect redgifs pages to source video
 // @version      3.0.0
+// @license      0BSD
 // @author       Zarin
 // @match        https://www.redgifs.com/*
 // @grant        none

@@ -3,6 +3,7 @@
 // @namespace    https://github.com
 // @description  Fixes mouse events in the image viewer
 // @version      1.0.1
+// @license      0BSD
 // @author       Zarin
 // @match        *://moca-news.net/article/*
 // @grant        none
