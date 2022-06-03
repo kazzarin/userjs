@@ -2,7 +2,7 @@
 // @name         Kitsu External Links
 // @namespace    https://github.com
 // @description  Add external links to Kitsu media pages
-// @version      2.0.0
+// @version      2.0.1
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
@@ -43,9 +43,15 @@
 
     async function fetchMappings(media, slug) {
         const mediaQuery = media === 'anime' ? 'findAnimeBySlug' : 'findMangaBySlug';
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const auth = JSON.parse(localStorage.getItem('ember_simple_auth:session'));
+        const token = auth.authenticated?.access_token;
+        if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+        }
         const res = await fetch('https://kitsu.io/api/graphql', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers,
             body: JSON.stringify({
                 query: `query ($slug: String!) { ${mediaQuery}(slug: $slug) { mappings(first: 20) { nodes { externalId externalSite } } } }`,
                 variables: { slug },
@@ -54,7 +60,7 @@
         if (res.ok) {
             const { data } = await res.json();
             if (data) {
-                return data[mediaQuery].mappings.nodes;
+                return data[mediaQuery].mappings?.nodes;
             }
         }
         return null;
