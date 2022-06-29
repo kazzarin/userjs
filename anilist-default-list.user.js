@@ -2,7 +2,7 @@
 // @name         AniList Default List
 // @namespace    https://github.com
 // @description  Set default list when navigating from header
-// @version      1.1.1
+// @version      1.1.2
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -13,7 +13,7 @@
 /* global VM */
 
 (() => {
-    const regex = /\/user\/([a-zA-Z0-9]+)\/(animelist|mangalist)/;
+    const regex = /\/user\/(\w+)\/(animelist|mangalist)/;
     const list = {
         anime: 'Watching',
         manga: 'Reading',

@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com
 // @description  Add links to MAL on media pages
-// @version      2.7.1
+// @version      2.7.2
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -14,7 +14,7 @@
 
 (() => {
     const store = new Map();
-    const regex = /\/(anime|manga)\/([0-9]+)(\/.*)?/;
+    const regex = /\/(anime|manga)\/(\d+)(\/.*)?/;
 
     async function updateStore(data) {
         const [k, v] = data;

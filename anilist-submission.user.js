@@ -2,7 +2,7 @@
 // @name         AniList Submission Links
 // @namespace    https://github.com
 // @description  Add links to submissions on user profiles
-// @version      1.3.1
+// @version      1.3.2
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -13,7 +13,7 @@
 /* global VM */
 
 (() => {
-    const regex = /\/user\/([A-Za-z0-9]+)(\/.*)?/;
+    const regex = /\/user\/(\w+)(\/.*)?/;
 
     function clickHandler(e) {
         if (e.target?.id === 'submissions-link') {

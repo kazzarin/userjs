@@ -2,7 +2,7 @@
 // @name         AniList Default Submission
 // @namespace    https://github.com
 // @description  Set default submission category when navigating to your submissions
-// @version      1.1.1
+// @version      1.1.2
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -13,7 +13,7 @@
 /* global VM */
 
 (() => {
-    const regex = /\/user\/([a-zA-Z0-9]+)\/submissions/;
+    const regex = /\/user\/(\w+)\/submissions/;
     const type = 'manga';
 
     function clickHandler(e) {
