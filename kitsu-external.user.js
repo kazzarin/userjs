@@ -2,7 +2,7 @@
 // @name         Kitsu External Links
 // @namespace    https://github.com
 // @description  Add external links to Kitsu media pages
-// @version      2.0.1
+// @version      3.0.0
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/npm/url-change-event@0.1.3
@@ -44,6 +44,8 @@
     ];
 
     async function fetchMappings(media, slug) {
+        const store = JSON.parse(sessionStorage.getItem(`external-${media}-${slug}`));
+        if (store) return store;
         const mediaQuery = media === 'anime' ? 'findAnimeBySlug' : 'findMangaBySlug';
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const auth = JSON.parse(localStorage.getItem('ember_simple_auth:session'));
@@ -62,7 +64,9 @@
         if (res.ok) {
             const { data } = await res.json();
             if (data) {
-                return data[mediaQuery].mappings?.nodes;
+                const nodes = data[mediaQuery].mappings?.nodes;
+                sessionStorage.setItem(`external-${media}-${slug}`, JSON.stringify(nodes));
+                return nodes;
             }
         }
         return null;
