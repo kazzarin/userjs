@@ -5,14 +5,16 @@
 // @version      2.0.1
 // @license      0BSD
 // @author       Zarin
-// @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
-// @match        *://kitsu.io/*
+// @require      https://cdn.jsdelivr.net/npm/url-change-event@0.1.3
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @match        https://kitsu.io/*
 // @grant        none
 // ==/UserScript==
 
-(() => {
-    const REGEX = /^https?:\/\/kitsu\.io\/(anime|manga)\/([^/]+)\/?(?:\?.*)?$/;
+/* global VM */
 
+(() => {
+    const regex = /\/(anime|manga)\/([^/]+)\/?(?:\?.*)?$/;
     const mappingLinks = [
         {
             key: 'MYANIMELIST_ANIME',
@@ -66,76 +68,59 @@
         return null;
     }
 
-    async function newElem(type, props) {
-        const elem = document.createElement(type);
-        if (props) {
-            Object.entries(props).forEach((attr) => {
-                const [k, v] = attr;
-                if (k === 'style') {
-                    Object.entries(v).forEach((prop) => {
-                        const [l, w] = prop;
-                        elem.style[l] = w;
-                    });
-                } else {
-                    elem[k] = v;
-                }
-            });
-        }
-        return elem;
-    }
-
-    async function createLinks(mappings, url) {
-        const check = document.querySelector('#external-links');
-        if (check) check.remove();
-
-        if (location.href === url && mappings?.length) {
-            const section = await newElem('section', {
+    function createLinks(mappings) {
+        if (mappings.length) {
+            const header = VM.h('h5', {}, 'External Links');
+            const listWrap = VM.hm('ul');
+            const section = VM.hm('section', {
                 id: 'external-links',
                 className: 'media--information',
-            });
-
-            const header = await newElem('h5', {
-                textContent: 'External Links',
-            });
-
-            const listWrap = await newElem('ul');
-
-            mappings.forEach(async (site) => {
+            }, [header, listWrap]);
+            mappings.forEach((site) => {
                 const map = mappingLinks.find((extLink) => extLink.key === site.externalSite);
                 if (map) {
-                    const list = await newElem('li');
-                    const link = await newElem('a', {
+                    const link = VM.h('a', {
                         target: '_blank',
                         rel: 'noopener noreferrer',
                         href: map.link + site.externalId,
-                        textContent: map.title,
-                    });
-                    list.appendChild(link);
+                    }, map.title);
+                    const list = VM.hm('li', {}, link);
                     listWrap.appendChild(list);
                 }
             });
-
-            section.appendChild(header);
-            section.appendChild(listWrap);
             return section;
         }
         return null;
     }
 
-    waitForUrl(REGEX, (url) => {
-        const [, media, slug] = url.match(REGEX);
-        waitForElems({
-            sel: '.media-summary',
-            stop: true,
-            onmatch: async (node) => {
-                const mappings = await fetchMappings(media, slug);
-                if (mappings) {
-                    const links = await createLinks(mappings, url);
-                    if (links) {
-                        node.append(links);
+    async function init(side, path) {
+        const [, media, slug] = path.match(regex);
+        const mappings = await fetchMappings(media, slug);
+        const check = document.querySelector('#external-links');
+        if (check) check.remove();
+        if (mappings) {
+            const links = createLinks(mappings);
+            if (links) {
+                side.append(links);
+            }
+        }
+    }
+
+    window.addEventListener('urlchangeevent', (e) => {
+        if (regex.test(e.newURL?.pathname)) {
+            const sidebar = document.querySelector('.media-summary');
+            if (sidebar) {
+                init(sidebar, e.newURL.pathname);
+            } else {
+                VM.observe(document.body, () => {
+                    const node = document.querySelector('.media-summary');
+                    if (node) {
+                        init(node, e.newURL.pathname);
+                        return true;
                     }
-                }
-            },
-        });
+                    return false;
+                });
+            }
+        }
     });
 })();
