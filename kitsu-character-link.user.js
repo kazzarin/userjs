@@ -2,17 +2,20 @@
 // @name         Kitsu Character Link
 // @namespace    https://github.com
 // @description  Link characters to MAL pages
-// @version      2.0.0
+// @version      2.0.1
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
-// @match        *://kitsu.io/*
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @match        https://kitsu.io/*
 // @grant        none
 // ==/UserScript==
 
+/* global VM */
+
 (() => {
-    async function getCharId(elem) {
-        const regex = /images\/([0-9]+)\//;
+    function getCharId(elem) {
+        const regex = /images\/(\d+)\//;
         if (elem.src && elem.src.match(regex)) {
             return elem.src.match(regex)[1];
         }
@@ -24,12 +27,10 @@
 
     async function getStore() {
         const store = localStorage.getItem('kitsu-character');
-        if (!store) {
-            const newStore = new Map();
-            localStorage.setItem('kitsu-character', JSON.stringify(Array.from(newStore.entries())));
-            return newStore;
-        }
-        return new Map(JSON.parse(store));
+        if (store) return new Map(JSON.parse(store));
+        const newStore = new Map();
+        localStorage.setItem('kitsu-character', JSON.stringify(Array.from(newStore.entries())));
+        return newStore;
     }
 
     async function updateStore(data) {
@@ -56,29 +57,9 @@
     async function checkStore(id) {
         const store = await getStore();
         if (store) {
-            if (store.has(id)) {
-                return store.get(id);
-            }
+            if (store.has(id)) return store.get(id);
         }
         return fetchMalId(id);
-    }
-
-    async function newElem(type, props) {
-        const elem = document.createElement(type);
-        if (props) {
-            Object.entries(props).forEach((attr) => {
-                const [k, v] = attr;
-                if (k === 'style') {
-                    Object.entries(v).forEach((prop) => {
-                        const [l, w] = prop;
-                        elem.style[l] = w;
-                    });
-                } else {
-                    elem[k] = v;
-                }
-            });
-        }
-        return elem;
     }
 
     // Waifu/husbando
@@ -90,15 +71,12 @@
                 const mal = await checkStore(parseInt(id));
                 if (mal) {
                     const name = document.querySelector('.waifu-name');
-                    const link = await newElem('a', {
-                        textContent: name.textContent,
-                        style: {
-                            fontFamily: 'inherit',
-                        },
+                    const link = VM.hm('a', {
                         href: `https://myanimelist.net/character/${mal}`,
                         target: '_blank',
                         rel: 'noopener noreferrer',
-                    });
+                        style: 'font-family: inherit;',
+                    }, name.textContent);
                     name.textContent = '';
                     name.appendChild(link);
                 }
