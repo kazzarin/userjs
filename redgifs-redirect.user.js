@@ -2,7 +2,7 @@
 // @name         Redgifs Redirect
 // @namespace    https://github.com
 // @description  Redirect redgifs pages to source video
-// @version      3.0.0
+// @version      3.0.1
 // @license      0BSD
 // @author       Zarin
 // @match        https://www.redgifs.com/*
@@ -17,7 +17,7 @@
         const res = await fetch(`https://api.redgifs.com/v2/gifs/${id}`);
         if (res.ok) {
             const { gif } = await res.json();
-            return gif.urls.hd;
+            return gif.urls.hd.replace('thumbs2', 'thumbs3');
         }
         return null;
     }
