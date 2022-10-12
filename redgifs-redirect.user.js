@@ -2,7 +2,7 @@
 // @name         Redgifs Redirect
 // @namespace    https://github.com
 // @description  Redirect redgifs pages to source video
-// @version      3.0.1
+// @version      4.0.0
 // @license      0BSD
 // @author       Zarin
 // @match        https://www.redgifs.com/*
@@ -11,29 +11,60 @@
 // ==/UserScript==
 
 (() => {
-    const regex = /\/watch\/([A-Za-z-]+)/;
+    const vidPattern = /\/watch\/([a-z]+)/;
+    const headers = new Headers({
+        referer: 'https://www.redgifs.com/',
+        origin: 'https://www.redgifs.com',
+        'content-type': 'application/json',
+    });
 
-    async function fetchVid(id) {
-        const res = await fetch(`https://api.redgifs.com/v2/gifs/${id}`);
+    async function fetchToken() {
+        const scriptLink = document.querySelector('link[href^="/assets/js/index"]');
+        const script = await fetch(scriptLink.href);
+        if (script.ok) {
+            const parsed = await script.text();
+            const [, token] = parsed.match(/\w+\s*[=:]\s*"(ey[^"]+\.[^"]*\.[^"]{43,45})"/);
+            if (token) {
+                localStorage.setItem('token', token);
+                return token;
+            }
+            return new Error('Failed to find oauth token');
+        }
+        return new Error('Failed to retrieve script data');
+    }
+
+    async function fetchVid(id, token) {
+        headers.set('authorization', `Bearer ${token}`);
+        headers.set('x-customheader', location.href);
+        const res = await fetch(`https://api.redgifs.com/v2/gifs/${id}`, { headers });
         if (res.ok) {
             const { gif } = await res.json();
-            return gif.urls.hd.replace('thumbs2', 'thumbs3');
+            return gif.urls.hd;
         }
-        return null;
+        if (res.status === 401) {
+            localStorage.removeItem('token');
+            const newToken = await fetchToken();
+            return typeof newToken === 'string' ? fetchVid(id, newToken) : newToken;
+        }
+        return new Error(`API responded with ${res.status} ${res.statusText}`);
+    }
+
+    async function checkToken() {
+        const token = localStorage.getItem('token');
+        return token || fetchToken();
     }
 
     async function checkLink(url) {
-        const [, slug] = url.match(regex);
-        const id = slug.split('-')[0];
-        return fetchVid(id);
+        const [, slug] = url.match(vidPattern);
+        const token = await checkToken();
+        return typeof token === 'string' ? fetchVid(slug, token) : token;
     }
 
     async function redirect(path) {
-        if (regex.test(path)) {
+        if (vidPattern.test(path)) {
             const link = await checkLink(path);
-            if (link) {
-                location.assign(link);
-            }
+            if (link instanceof Error) throw link;
+            if (typeof link === 'string') location.assign(link);
         }
     }
 
