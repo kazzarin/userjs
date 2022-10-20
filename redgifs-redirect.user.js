@@ -2,7 +2,7 @@
 // @name         Redgifs Redirect
 // @namespace    https://github.com
 // @description  Redirect redgifs pages to source video
-// @version      4.0.0
+// @version      4.1.0
 // @license      0BSD
 // @author       Zarin
 // @match        https://www.redgifs.com/*
@@ -19,18 +19,16 @@
     });
 
     async function fetchToken() {
-        const scriptLink = document.querySelector('link[href^="/assets/js/index"]');
-        const script = await fetch(scriptLink.href);
-        if (script.ok) {
-            const parsed = await script.text();
-            const [, token] = parsed.match(/\w+\s*[=:]\s*"(ey[^"]+\.[^"]*\.[^"]{43,45})"/);
+        const res = await fetch('https://api.redgifs.com/v2/auth/temporary');
+        if (res.ok) {
+            const { token } = await res.json();
             if (token) {
                 localStorage.setItem('token', token);
                 return token;
             }
-            return new Error('Failed to find oauth token');
+            return new Error('Failed to find token');
         }
-        return new Error('Failed to retrieve script data');
+        return new Error('Failed to retrieve temporary token');
     }
 
     async function fetchVid(id, token) {
