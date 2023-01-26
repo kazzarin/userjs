@@ -2,7 +2,7 @@
 // @name         AniList MangaDex Links
 // @namespace    https://github.com
 // @description  Add links to MangaDex search on manga pages
-// @version      1.3.2
+// @version      1.3.3
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -58,7 +58,7 @@
 
     function routeWatch() {
         const app = document.getElementById('app');
-        if (app.__vue__) {
+        if (app?.__vue__) {
             app.__vue__.$router.afterEach((newRoute) => {
                 if (regex.test(newRoute.path)) {
                     watchElem();

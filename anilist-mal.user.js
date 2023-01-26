@@ -2,7 +2,7 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com
 // @description  Add links to MAL on media pages
-// @version      2.7.2
+// @version      2.7.3
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -88,7 +88,7 @@
 
     function routeWatch() {
         const app = document.getElementById('app');
-        if (app.__vue__) {
+        if (app?.__vue__) {
             app.__vue__.$router.afterEach((newRoute) => {
                 if (regex.test(newRoute.path)) {
                     watchElem();
