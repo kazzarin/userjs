@@ -11,7 +11,7 @@
 // @grant        none
 // ==/UserScript==
 
-/* global VM */
+/* global VM, waitForElems */
 
 (() => {
     function getCharId(elem) {

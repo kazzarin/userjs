@@ -10,6 +10,8 @@
 // @grant        none
 // ==/UserScript==
 
+/* global waitForElems */
+
 (() => {
     waitForElems({
         sel: '.media--information .more-link',

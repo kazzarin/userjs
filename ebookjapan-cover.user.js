@@ -10,6 +10,8 @@
 // @grant        none
 // ==/UserScript==
 
+/* global waitForElems, waitForUrl */
+
 (() => {
     const REGEX = /^https?:\/\/ebookjapan\.yahoo\.co\.jp\/books\/([0-9]+)(\/.*)?$/;
 

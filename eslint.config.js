@@ -6,9 +6,7 @@ export default [
         languageOptions: {
             globals: {
                 ...globals.browser,
-                ...globals.greasemonkey,
-                waitForElems: "readonly",
-                waitForUrl: "readonly"
+                ...globals.greasemonkey
             }
         }
     }
