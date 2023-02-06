@@ -2,24 +2,31 @@
 // @name         Redgifs Redirect
 // @namespace    https://github.com
 // @description  Redirect redgifs pages to source video
-// @version      4.1.0
+// @version      4.2.0
 // @license      0BSD
 // @author       Zarin
 // @match        https://www.redgifs.com/*
+// @match        https://v3.redgifs.com/*
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
 
 (() => {
     const vidPattern = /\/watch\/([a-z]+)/;
-    const headers = new Headers({
-        referer: 'https://www.redgifs.com/',
-        origin: 'https://www.redgifs.com',
-        'content-type': 'application/json',
-    });
+
+    class ApiHeaders extends Headers {
+        constructor() {
+            super({
+                referer: `https://${location.hostname}/`,
+                origin: `https://${location.hostname}`,
+                'content-type': 'application/json',
+            });
+        }
+    }
 
     async function fetchToken() {
-        const res = await fetch('https://api.redgifs.com/v2/auth/temporary');
+        const headers = new ApiHeaders();
+        const res = await fetch('https://api.redgifs.com/v2/auth/temporary', { headers });
         if (res.ok) {
             const { token } = await res.json();
             if (token) {
@@ -32,6 +39,7 @@
     }
 
     async function fetchVid(id, token) {
+        const headers = new ApiHeaders();
         headers.set('authorization', `Bearer ${token}`);
         headers.set('x-customheader', location.href);
         const res = await fetch(`https://api.redgifs.com/v2/gifs/${id}`, { headers });
