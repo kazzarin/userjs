@@ -2,11 +2,11 @@
 // @name         Kitsu External Links
 // @namespace    https://github.com
 // @description  Add external links to Kitsu media pages
-// @version      3.0.0
+// @version      3.0.1
 // @license      0BSD
 // @author       Zarin
-// @require      https://cdn.jsdelivr.net/npm/url-change-event@0.1.3
-// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @require      https://cdn.jsdelivr.net/npm/url-change-event@0.1.6/dist/url-change-event.js
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2/dist/index.js
 // @match        https://kitsu.io/*
 // @grant        none
 // ==/UserScript==

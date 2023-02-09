@@ -2,10 +2,10 @@
 // @name         AniList MAL Links
 // @namespace    https://github.com
 // @description  Add links to MAL on media pages
-// @version      2.7.3
+// @version      2.7.4
 // @license      0BSD
 // @author       Zarin
-// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2/dist/index.js
 // @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==

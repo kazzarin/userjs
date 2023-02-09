@@ -2,10 +2,10 @@
 // @name         AniList Header Links
 // @namespace    https://github.com
 // @description  Add links to submit anime/manga in header
-// @version      1.1.1
+// @version      1.1.2
 // @license      0BSD
 // @author       Zarin
-// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2/dist/index.js
 // @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==

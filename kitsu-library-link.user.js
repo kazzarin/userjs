@@ -2,10 +2,10 @@
 // @name         Kitsu Library Link
 // @namespace    https://github.com
 // @description  Forces library parameters in the header link
-// @version      2.0.0
+// @version      2.0.1
 // @license      0BSD
 // @author       Zarin
-// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2/dist/index.js
 // @match        https://kitsu.io/*
 // @grant        none
 // ==/UserScript==

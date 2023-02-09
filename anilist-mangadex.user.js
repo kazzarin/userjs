@@ -2,10 +2,10 @@
 // @name         AniList MangaDex Links
 // @namespace    https://github.com
 // @description  Add links to MangaDex search on manga pages
-// @version      1.3.3
+// @version      1.3.4
 // @license      0BSD
 // @author       Zarin
-// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2/dist/index.js
 // @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==

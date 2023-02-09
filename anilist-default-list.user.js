@@ -2,10 +2,10 @@
 // @name         AniList Default List
 // @namespace    https://github.com
 // @description  Set default list when navigating from header
-// @version      1.1.2
+// @version      1.1.3
 // @license      0BSD
 // @author       Zarin
-// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2/dist/index.js
 // @match        https://anilist.co/*
 // @grant        none
 // ==/UserScript==

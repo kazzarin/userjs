@@ -2,11 +2,11 @@
 // @name         Kitsu Character Link
 // @namespace    https://github.com
 // @description  Link characters to MAL pages
-// @version      2.0.1
+// @version      2.0.2
 // @license      0BSD
 // @author       Zarin
 // @require      https://cdn.jsdelivr.net/gh/fuzetsu/userscripts@ec863aa92cea78a20431f92e80ac0e93262136df/wait-for-elements/wait-for-elements.js
-// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
+// @require      https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2/dist/index.js
 // @match        https://kitsu.io/*
 // @grant        none
 // ==/UserScript==
