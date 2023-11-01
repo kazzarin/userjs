@@ -1,13 +1,15 @@
 import globals from "globals";
+import js from "@eslint/js";
 
 export default [
-    "eslint:recommended",
     {
         languageOptions: {
             globals: {
                 ...globals.browser,
                 ...globals.greasemonkey
             }
-        }
+        },
+        files: ["**/*.js"],
+        rules: js.configs.recommended.rules
     }
 ];

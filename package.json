@@ -12,9 +12,10 @@
   "homepage": "https://github.com/kazzarin/userjs",
   "type": "module",
   "scripts": {
-    "test": "eslint \"**/*.js\""
+    "test": "eslint"
   },
   "devDependencies": {
+    "@eslint/js": "^8.52.0",
     "eslint": "^8.52.0",
     "globals": "^13.23.0"
   }
